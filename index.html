@@ -3,435 +3,533 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BastionGrid Embedded — Rugged Industrial IoT for Defense Logistics & Critical Infrastructure</title>
-  <meta name="description" content="BastionGrid Embedded delivers ruggedized IP67 Industrial IoT nodes, isolated fieldbus electronics, encrypted Sub-GHz telemetry, and turnkey HW/FW/Mechanics engineering for defense logistics and critical infrastructure." />
+  <title>BastionGrid Embedded — Rugged Industrial IoT for Defense Logistics &amp; Critical Infrastructure</title>
+  <meta name="description" content="BastionGrid Embedded — European engineering service company delivering ruggedized IP67 Industrial IoT nodes, isolated J1939 electronics, and encrypted Sub-GHz telemetry for defense logistics and critical infrastructure." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #0B1117;
-      --surface: #121C26;
-      --surface-2: #172432;
-      --border: #223244;
-      --amber: #F59E0B;
-      --amber-soft: rgba(245, 158, 11, 0.14);
-      --cyan: #38BDF8;
-      --cyan-soft: rgba(56, 189, 248, 0.12);
-      --green: #22C55E;
-      --text: #F1F5F9;
-      --muted: #94A3B8;
-      --radius: 12px;
+      --paper: #F4F3EE;
+      --white: #FFFFFF;
+      --stone: #EAE8E0;
+      --ink: #14191F;
+      --ink-soft: #46515E;
+      --line: #CFCBC0;
+      --line-strong: #14191F;
+      --pine: #1B3A2B;
+      --pine-dark: #12281D;
+      --pine-tint: #E6EFEA;
+      --signal: #D1491F;
+      --signal-tint: #FCECE6;
+      --radius: 3px;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      background-image:
-        radial-gradient(circle at 12% 10%, rgba(245, 158, 11, 0.08), transparent 36%),
-        radial-gradient(circle at 88% 18%, rgba(56, 189, 248, 0.08), transparent 38%),
-        linear-gradient(rgba(34, 50, 68, 0.22) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(34, 50, 68, 0.22) 1px, transparent 1px);
-      background-size: auto, auto, 48px 48px, 48px 48px;
+      font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.58;
+      -webkit-font-smoothing: antialiased;
     }
     a { color: inherit; text-decoration: none; }
-    .container { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
-    .mono { font-family: 'JetBrains Mono', monospace; }
-    h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; letter-spacing: -0.02em; }
+    .mono { font-family: 'IBM Plex Mono', monospace; }
+    .container { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+
+    /* Top spec bar */
+    .spec-bar {
+      background: var(--pine-dark);
+      color: #D7E3DC;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-bottom: 2px solid var(--signal);
+    }
+    .spec-bar-inner {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 8px 0; flex-wrap: wrap; gap: 10px;
+    }
+    .spec-bar strong { color: #FFFFFF; }
 
     /* Navbar */
     header {
       position: sticky; top: 0; z-index: 50;
-      background: rgba(11, 17, 23, 0.88);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
+      background: rgba(244, 243, 238, 0.94);
+      backdrop-filter: blur(8px);
+      border-bottom: 1.5px solid var(--ink);
     }
     .nav-wrap {
       display: flex; align-items: center; justify-content: space-between;
-      height: 68px;
+      height: 66px;
     }
-    .brand { display: flex; align-items: center; gap: 12px; font-weight: 700; }
-    .brand-name { font-family: 'Space Grotesk', sans-serif; font-size: 1.08rem; letter-spacing: 0.04em; }
-    .brand-sub { font-size: 0.68rem; color: var(--amber); letter-spacing: 0.14em; text-transform: uppercase; display: block; line-height: 1; }
-    nav { display: flex; gap: 24px; align-items: center; font-size: 0.9rem; color: var(--muted); }
-    nav a:hover { color: var(--text); }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .brand-title { font-weight: 700; font-size: 1.05rem; letter-spacing: 0.08em; line-height: 1.1; }
+    .brand-sub { font-size: 0.66rem; color: var(--pine); letter-spacing: 0.14em; text-transform: uppercase; display: block; font-weight: 600; }
+    nav { display: flex; gap: 22px; align-items: center; font-size: 0.86rem; font-weight: 500; color: var(--ink-soft); }
+    nav a:hover { color: var(--ink); }
+
     .btn {
       display: inline-flex; align-items: center; gap: 8px;
-      padding: 10px 18px; border-radius: 8px; font-weight: 600; font-size: 0.9rem;
-      transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
-      cursor: pointer; border: 1px solid transparent;
+      padding: 10px 18px; border-radius: var(--radius);
+      font-weight: 600; font-size: 0.86rem; letter-spacing: 0.02em;
+      border: 1.5px solid var(--ink); transition: all 0.15s ease; cursor: pointer;
     }
-    .btn-primary { background: var(--amber); color: #0B1117; }
-    .btn-primary:hover { background: #fbbf24; transform: translateY(-1px); }
-    .btn-outline { border-color: var(--border); background: var(--surface); color: var(--text); }
-    .btn-outline:hover { border-color: var(--cyan); color: var(--cyan); }
+    .btn-pine { background: var(--pine); color: #FFFFFF; border-color: var(--pine); }
+    .btn-pine:hover { background: var(--pine-dark); }
+    .btn-signal { background: var(--signal); color: #FFFFFF; border-color: var(--signal); }
+    .btn-signal:hover { background: #b53b16; }
+    .btn-ghost { background: var(--white); color: var(--ink); border-color: var(--ink); }
+    .btn-ghost:hover { background: var(--stone); }
 
-    /* Hero */
-    .hero { padding: 72px 0 56px; }
-    .hero-grid { display: grid; grid-template-columns: 1.25fr 0.95fr; gap: 36px; align-items: center; }
-    .badge {
+    /* Hero - Swiss Editorial Split */
+    .hero { padding: 54px 0 48px; border-bottom: 1.5px solid var(--ink); }
+    .hero-top {
+      display: grid; grid-template-columns: 1.35fr 0.65fr; gap: 28px;
+      align-items: end; padding-bottom: 34px; border-bottom: 1px solid var(--line);
+    }
+    .doc-tag {
       display: inline-flex; align-items: center; gap: 8px;
-      padding: 6px 12px; border-radius: 999px;
-      background: var(--amber-soft); border: 1px solid rgba(245, 158, 11, 0.35);
-      color: var(--amber); font-size: 0.78rem; font-weight: 600; margin-bottom: 18px;
+      font-size: 0.74rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em;
+      color: var(--signal); margin-bottom: 14px;
     }
-    .badge .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--amber); }
-    .hero h1 { font-size: clamp(2.1rem, 4vw, 3.15rem); line-height: 1.1; margin-bottom: 18px; }
-    .hero h1 span { color: var(--amber); }
-    .hero p.lead { color: var(--muted); font-size: 1.05rem; margin-bottom: 26px; max-width: 600px; }
-    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 28px; }
-    .kpi-strip {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
-      padding-top: 22px; border-top: 1px solid var(--border);
+    .doc-tag::before { content: ""; width: 10px; height: 10px; background: var(--signal); display: inline-block; }
+    .hero h1 {
+      font-size: clamp(2.15rem, 4.1vw, 3.25rem);
+      font-weight: 700; line-height: 1.07; letter-spacing: -0.025em;
+      color: var(--ink);
     }
-    .kpi strong { display: block; font-family: 'Space Grotesk', sans-serif; font-size: 1.35rem; color: var(--text); }
-    .kpi span { font-size: 0.78rem; color: var(--muted); }
+    .hero h1 em { font-style: normal; color: var(--pine); text-decoration: underline; text-decoration-color: var(--signal); text-underline-offset: 6px; text-decoration-thickness: 3px; }
+    .hero-side p { color: var(--ink-soft); font-size: 0.96rem; margin-bottom: 18px; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; }
 
-    /* Hero Diagram Card */
-    .diagram-card {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 20px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+    /* Hero Bottom: Blueprint + Facts */
+    .hero-bottom {
+      display: grid; grid-template-columns: 1.45fr 0.55fr; gap: 24px; margin-top: 28px;
     }
-    .diagram-header {
+    .blueprint-box {
+      background: var(--white); border: 1.5px solid var(--ink); border-radius: var(--radius);
+      padding: 18px 20px;
+    }
+    .blueprint-head {
       display: flex; justify-content: space-between; align-items: center;
-      margin-bottom: 14px; font-size: 0.76rem; color: var(--muted);
+      padding-bottom: 10px; margin-bottom: 12px; border-bottom: 1px solid var(--line);
+      font-size: 0.73rem; color: var(--ink-soft);
     }
-    .pill-live { color: var(--green); background: rgba(34, 197, 94, 0.12); padding: 3px 8px; border-radius: 999px; border: 1px solid rgba(34, 197, 94, 0.3); }
+    .status-chip {
+      background: var(--pine-tint); color: var(--pine); border: 1px solid var(--pine);
+      padding: 2px 8px; font-weight: 600; border-radius: 2px;
+    }
+    .fact-stack { display: grid; gap: 12px; }
+    .fact-card {
+      background: var(--white); border: 1px solid var(--line);
+      border-left: 4px solid var(--pine); padding: 14px 16px; border-radius: var(--radius);
+    }
+    .fact-card.signal { border-left-color: var(--signal); }
+    .fact-card .label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-soft); }
+    .fact-card strong { display: block; font-size: 1.25rem; margin-top: 2px; color: var(--ink); }
+    .fact-card span { font-size: 0.8rem; color: var(--ink-soft); }
 
     /* Sections */
-    section { padding: 56px 0; border-top: 1px solid rgba(34, 50, 68, 0.65); }
-    .sec-kicker { color: var(--amber); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.14em; font-weight: 600; margin-bottom: 8px; }
-    .sec-title { font-size: clamp(1.55rem, 2.8vw, 2.1rem); margin-bottom: 12px; }
-    .sec-desc { color: var(--muted); max-width: 720px; margin-bottom: 30px; }
+    section { padding: 54px 0; border-bottom: 1px solid var(--line); }
+    .sec-head {
+      display: grid; grid-template-columns: 240px 1fr; gap: 24px;
+      margin-bottom: 30px; align-items: baseline;
+    }
+    .sec-num {
+      font-size: 0.76rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em;
+      color: var(--signal); padding-top: 6px; border-top: 2px solid var(--signal);
+    }
+    .sec-head h2 { font-size: clamp(1.5rem, 2.6vw, 2.05rem); line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 8px; }
+    .sec-head p { color: var(--ink-soft); max-width: 720px; font-size: 0.95rem; }
 
-    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
-    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
-    .card {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 22px;
+    /* Architectural Spec Grid */
+    .spec-grid-3 {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      border: 1.5px solid var(--ink); background: var(--white); border-radius: var(--radius);
     }
-    .card h3 { font-size: 1.08rem; margin-bottom: 8px; }
-    .card p { font-size: 0.9rem; color: var(--muted); }
-    .card-tag {
-      display: inline-block; font-size: 0.72rem; color: var(--cyan);
-      background: var(--cyan-soft); border: 1px solid rgba(56, 189, 248, 0.28);
-      padding: 3px 8px; border-radius: 6px; margin-bottom: 12px;
+    .spec-col { padding: 24px; border-right: 1px solid var(--line); }
+    .spec-col:last-child { border-right: none; }
+    .col-code {
+      display: inline-block; font-size: 0.72rem; font-weight: 600;
+      background: var(--stone); color: var(--pine); padding: 3px 8px; margin-bottom: 12px;
+      border: 1px solid var(--line);
     }
-    .spec-list { list-style: none; margin-top: 12px; display: grid; gap: 6px; }
-    .spec-list li { font-size: 0.85rem; color: var(--muted); padding-left: 14px; position: relative; }
-    .spec-list li::before { content: "›"; position: absolute; left: 0; color: var(--amber); font-weight: 700; }
+    .spec-col h3 { font-size: 1.12rem; margin-bottom: 8px; }
+    .spec-col p { font-size: 0.88rem; color: var(--ink-soft); margin-bottom: 14px; }
+    .spec-list { list-style: none; display: grid; gap: 7px; border-top: 1px dashed var(--line); padding-top: 12px; }
+    .spec-list li { font-size: 0.84rem; color: var(--ink); padding-left: 14px; position: relative; }
+    .spec-list li::before { content: "▪"; position: absolute; left: 0; color: var(--signal); }
 
-    /* Event Banner */
-    .event-banner {
-      background: linear-gradient(135deg, #132030 0%, #1b1710 100%);
-      border: 1px solid rgba(245, 158, 11, 0.45);
-      border-radius: var(--radius); padding: 28px;
-      display: grid; grid-template-columns: 1.4fr 0.6fr; gap: 24px; align-items: center;
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .panel {
+      background: var(--white); border: 1px solid var(--line); border-top: 3px solid var(--pine);
+      padding: 24px; border-radius: var(--radius);
     }
-    .event-meta { display: flex; flex-wrap: wrap; gap: 10px; margin: 12px 0 14px; }
-    .event-chip {
-      font-size: 0.78rem; padding: 5px 10px; border-radius: 6px;
-      background: rgba(11, 17, 23, 0.75); border: 1px solid var(--border); color: var(--text);
-    }
+    .panel.accent { border-top-color: var(--signal); }
+    .panel h3 { font-size: 1.1rem; margin-bottom: 10px; }
 
-    /* Team Table */
-    .table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }
-    table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
-    th, td { text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--border); }
-    th { background: var(--surface-2); color: var(--amber); font-family: 'Space Grotesk', sans-serif; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; }
+    /* Table */
+    .table-wrap { overflow-x: auto; background: var(--white); border: 1.5px solid var(--ink); border-radius: var(--radius); }
+    table { width: 100%; border-collapse: collapse; font-size: 0.87rem; }
+    th, td { text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--line); }
+    th { background: var(--stone); color: var(--ink); font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.06em; }
     tr:last-child td { border-bottom: none; }
+    tbody tr:hover { background: #FAF9F6; }
 
-    /* Contact */
-    .contact-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 22px; }
-    .contact-item { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 0.9rem; gap: 16px; }
-    .contact-item:last-child { border-bottom: none; }
-    .contact-item span { color: var(--muted); }
-    .contact-item a { color: var(--cyan); font-weight: 500; word-break: break-all; text-align: right; }
-    .contact-item a:hover { text-decoration: underline; }
+    /* Dark Pine Exhibition Callout */
+    .exhibition-band {
+      background: var(--pine);
+      color: #F4F3EE;
+      border-top: 2px solid var(--ink);
+      border-bottom: 2px solid var(--ink);
+    }
+    .exhibition-grid { display: grid; grid-template-columns: 1.35fr 0.65fr; gap: 28px; align-items: center; }
+    .exhibition-band h2 { color: #FFFFFF; font-size: clamp(1.6rem, 2.8vw, 2.2rem); margin: 8px 0 12px; line-height: 1.15; }
+    .exhibition-band p { color: #D4E2DA; font-size: 0.94rem; }
+    .ex-meta { display: flex; flex-wrap: wrap; gap: 10px; margin: 16px 0 20px; }
+    .ex-chip {
+      background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.28);
+      padding: 6px 12px; font-size: 0.78rem; color: #FFFFFF; border-radius: 2px;
+    }
+    .delegation-box {
+      background: var(--pine-dark); border: 1px solid rgba(255, 255, 255, 0.22);
+      padding: 20px 22px; border-radius: var(--radius);
+    }
+    .delegation-box ul { list-style: none; display: grid; gap: 9px; margin-top: 10px; font-size: 0.86rem; color: #E2ECE6; }
+    .delegation-box li strong { color: #FFFFFF; }
+
+    /* Contacts */
+    .contact-row {
+      display: flex; justify-content: space-between; align-items: baseline; gap: 14px;
+      padding: 11px 0; border-bottom: 1px solid var(--line); font-size: 0.88rem;
+    }
+    .contact-row:last-child { border-bottom: none; }
+    .contact-row span { color: var(--ink-soft); }
+    .contact-row a { color: var(--pine); font-weight: 600; text-align: right; word-break: break-all; }
+    .contact-row a:hover { color: var(--signal); text-decoration: underline; }
 
     footer {
-      border-top: 1px solid var(--border); padding: 28px 0;
-      font-size: 0.82rem; color: var(--muted);
+      background: var(--stone); padding: 26px 0; font-size: 0.8rem; color: var(--ink-soft);
     }
-    .footer-flex { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
 
-    @media (max-width: 900px) {
-      .hero-grid, .grid-3, .grid-4, .grid-2, .event-banner, .contact-grid { grid-template-columns: 1fr; }
+    @media (max-width: 920px) {
+      .hero-top, .hero-bottom, .sec-head, .spec-grid-3, .grid-2, .exhibition-grid { grid-template-columns: 1fr; }
+      .spec-col { border-right: none; border-bottom: 1px solid var(--line); }
+      .spec-col:last-child { border-bottom: none; }
       nav { display: none; }
     }
   </style>
 </head>
 <body>
 
+<div class="spec-bar mono">
+  <div class="container spec-bar-inner">
+    <span><strong>BASTIONGRID EMBEDDED</strong> // DUAL-USE INDUSTRIAL IoT &amp; DEFENSE LOGISTICS</span>
+    <span>KYIV R&amp;D LAB · WARSAW EU HUB &nbsp;|&nbsp; <strong>EMBEDDED WORLD 2027 · HALL 3, STAND 3-418</strong></span>
+  </div>
+</div>
+
 <header>
   <div class="container nav-wrap">
     <a href="#" class="brand">
-      <svg width="36" height="36" viewBox="0 0 40 40" fill="none" aria-label="BastionGrid Logo">
-        <polygon points="20,2 36,11 36,29 20,38 4,29 4,11" fill="#121C26" stroke="#F59E0B" stroke-width="2.4"/>
-        <polygon points="20,9 30,14.8 30,25.2 20,31 10,25.2 10,14.8" fill="none" stroke="#38BDF8" stroke-width="1.6"/>
-        <line x1="20" y1="9" x2="20" y2="31" stroke="#38BDF8" stroke-width="1.3" stroke-opacity="0.7"/>
-        <line x1="10" y1="20" x2="30" y2="20" stroke="#38BDF8" stroke-width="1.3" stroke-opacity="0.7"/>
-        <circle cx="20" cy="20" r="3.4" fill="#F59E0B"/>
+      <svg width="36" height="36" viewBox="0 0 40 40" fill="none" aria-label="BastionGrid Emblem">
+        <rect x="2" y="2" width="36" height="36" rx="3" fill="#1B3A2B" stroke="#14191F" stroke-width="2"/>
+        <path d="M11 11 H29 V29 H11 Z" fill="none" stroke="#F4F3EE" stroke-width="1.7"/>
+        <line x1="20" y1="7" x2="20" y2="33" stroke="#F4F3EE" stroke-width="1.2" stroke-opacity="0.65"/>
+        <line x1="7" y1="20" x2="33" y2="20" stroke="#F4F3EE" stroke-width="1.2" stroke-opacity="0.65"/>
+        <rect x="16.5" y="16.5" width="7" height="7" fill="#D1491F"/>
       </svg>
       <div>
-        <span class="brand-name">BASTIONGRID</span>
+        <span class="brand-title">BASTIONGRID</span>
         <span class="brand-sub mono">Embedded Systems</span>
       </div>
     </a>
     <nav>
       <a href="#capabilities">Capabilities</a>
-      <a href="#standards">Compliance</a>
-      <a href="#work">Delivery Model</a>
+      <a href="#compliance">Compliance</a>
+      <a href="#delivery">Delivery Model</a>
       <a href="#team">Team</a>
       <a href="#ew2027">embedded world 2027</a>
-      <a href="#contact" class="btn btn-primary">Contact Us</a>
+      <a href="#contact" class="btn btn-pine">Contact</a>
     </nav>
   </div>
 </header>
 
 <main>
   <!-- HERO -->
-  <section class="hero" style="border-top:none;">
-    <div class="container hero-grid">
-      <div>
-        <div class="badge mono"><span class="dot"></span> DUAL-USE INDUSTRIAL IoT · DEFENSE LOGISTICS</div>
-        <h1>Resilient Embedded Telemetry for <span>Harsh &amp; Mission-Critical</span> Field Operations</h1>
-        <p class="lead">
-          <strong>BastionGrid Embedded</strong> is a turnkey embedded engineering service company. We design, verify, and supervise manufacturing of rugged IP67 Industrial IoT nodes, isolated CAN/J1939 electronics, and encrypted Sub-GHz telemetry gateways for defense logistics, mobile power, and critical infrastructure.
-        </p>
-        <div class="hero-actions">
-          <a href="#contact" class="btn btn-primary">Request Technical Discovery</a>
-          <a href="#ew2027" class="btn btn-outline">Meet Us at embedded world 2027</a>
+  <section class="hero">
+    <div class="container">
+      <div class="hero-top">
+        <div>
+          <div class="doc-tag mono">ENGINEERING SERVICE COMPANY · SPEC SHEET 2027</div>
+          <h1>Rugged Embedded Telemetry Built for <em>Harsh Field</em> &amp; Defense Logistics</h1>
         </div>
-        <div class="kpi-strip">
-          <div class="kpi"><strong>9 Engineers</strong><span>HW · FW · Mech · V&amp;V · Assembly</span></div>
-          <div class="kpi"><strong>Kyiv + Warsaw</strong><span>R&amp;D Lab &amp; EU Logistics Hub</span></div>
-          <div class="kpi"><strong>€480k / yr</strong><span>Seed-Backed Service Setup</span></div>
+        <div class="hero-side">
+          <p>
+            <strong>BastionGrid Embedded</strong> designs, verifies, and supervises manufacturing of IP67 Industrial IoT nodes, galvanically isolated CAN/J1939 electronics, and encrypted Sub-GHz gateways for tactical power and critical infrastructure.
+          </p>
+          <div class="hero-actions">
+            <a href="#contact" class="btn btn-signal">Request Discovery Call</a>
+            <a href="#ew2027" class="btn btn-ghost">embedded world 2027 →</a>
+          </div>
         </div>
       </div>
 
-      <!-- Technical System Architecture Visual -->
-      <div class="diagram-card">
-        <div class="diagram-header mono">
-          <span>REF-ARCH // SENTINELNODE-IIoT</span>
-          <span class="pill-live">● EMC / IP67 READY</span>
+      <div class="hero-bottom">
+        <div class="blueprint-box">
+          <div class="blueprint-head mono">
+            <span>FIG 01 // REFERENCE TOPOLOGY: SENTINELNODE-IIoT</span>
+            <span class="status-chip">IP67 · -30°C/+65°C · AES-256-GCM</span>
+          </div>
+          <svg viewBox="0 0 680 228" width="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="SentinelNode-IIoT Blueprint Diagram">
+            <defs>
+              <pattern id="bpGrid" width="20" height="20" patternUnits="userSpaceOnUse">
+                <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#E5E3DA" stroke-width="0.8"/>
+              </pattern>
+            </defs>
+            <rect x="0" y="0" width="680" height="228" fill="#FAF9F5" stroke="#CFCBC0"/>
+            <rect x="0" y="0" width="680" height="228" fill="url(#bpGrid)"/>
+
+            <!-- Node A -->
+            <rect x="16" y="18" width="212" height="148" rx="3" fill="#FFFFFF" stroke="#1B3A2B" stroke-width="2"/>
+            <rect x="16" y="18" width="212" height="24" fill="#1B3A2B"/>
+            <text x="26" y="34" fill="#FFFFFF" font-family="IBM Plex Mono, monospace" font-size="10.5" font-weight="600">NODE A · SN-NODE (IP67)</text>
+            <text x="26" y="60" fill="#14191F" font-family="IBM Plex Sans, sans-serif" font-size="11.5" font-weight="600">STM32U5 + FreeRTOS</text>
+            <text x="26" y="79" fill="#D1491F" font-family="IBM Plex Mono, monospace" font-size="9.5" font-weight="600">• SE050 Secure Element (AES-256)</text>
+            <text x="26" y="97" fill="#46515E" font-family="IBM Plex Mono, monospace" font-size="9.5">• 2.5 kVrms Iso-CAN / J1939 + TVS</text>
+            <text x="26" y="115" fill="#46515E" font-family="IBM Plex Mono, monospace" font-size="9.5">• 9–36V Surge-Protected Rail</text>
+            <text x="26" y="133" fill="#1B3A2B" font-family="IBM Plex Mono, monospace" font-size="9.5" font-weight="600">• 72h NOR Flash Store-&amp;-Forward</text>
+            <text x="26" y="152" fill="#46515E" font-family="IBM Plex Mono, monospace" font-size="9">• Thermal Pad to CNC Aluminum</text>
+
+            <!-- RF Link -->
+            <line x1="228" y1="92" x2="314" y2="92" stroke="#D1491F" stroke-width="2.2" stroke-dasharray="6,4"/>
+            <polygon points="314,92 304,86 304,98" fill="#D1491F"/>
+            <rect x="236" y="62" width="70" height="20" rx="2" fill="#FCECE6" stroke="#D1491F"/>
+            <text x="243" y="76" fill="#D1491F" font-family="IBM Plex Mono, monospace" font-size="9" font-weight="600">868 MHz RF</text>
+            <text x="239" y="110" fill="#46515E" font-family="IBM Plex Mono, monospace" font-size="8.5">Authenticated</text>
+
+            <!-- Node B -->
+            <rect x="316" y="28" width="166" height="128" rx="3" fill="#FFFFFF" stroke="#14191F" stroke-width="1.8"/>
+            <rect x="316" y="28" width="166" height="24" fill="#14191F"/>
+            <text x="326" y="44" fill="#FFFFFF" font-family="IBM Plex Mono, monospace" font-size="10.5" font-weight="600">NODE B · SN-GW</text>
+            <text x="326" y="70" fill="#14191F" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="600">Depot Concentrator</text>
+            <text x="326" y="90" fill="#46515E" font-family="IBM Plex Mono, monospace" font-size="9.5">• Up to 32 Field Nodes</text>
+            <text x="326" y="108" fill="#46515E" font-family="IBM Plex Mono, monospace" font-size="9.5">• Iso-RS485 / Ethernet</text>
+            <text x="326" y="126" fill="#1B3A2B" font-family="IBM Plex Mono, monospace" font-size="9.5" font-weight="600">• Dry-Contact Alarm</text>
+            <text x="326" y="144" fill="#46515E" font-family="IBM Plex Mono, monospace" font-size="9">• &lt; 2.0s Fault Trigger</text>
+
+            <!-- Uplink -->
+            <line x1="482" y1="92" x2="520" y2="92" stroke="#1B3A2B" stroke-width="2"/>
+            <polygon points="520,92 511,86 511,98" fill="#1B3A2B"/>
+
+            <!-- Operator PC -->
+            <rect x="522" y="40" width="142" height="104" rx="3" fill="#FFFFFF" stroke="#1B3A2B" stroke-width="1.8"/>
+            <rect x="522" y="40" width="142" height="22" fill="#E6EFEA"/>
+            <text x="532" y="55" fill="#1B3A2B" font-family="IBM Plex Mono, monospace" font-size="10" font-weight="600">SN-OPS CONSOLE</text>
+            <text x="532" y="78" fill="#14191F" font-family="IBM Plex Sans, sans-serif" font-size="10.5" font-weight="600">Offline Operator UI</text>
+            <text x="532" y="97" fill="#1B3A2B" font-family="IBM Plex Mono, monospace" font-size="9">▪ Item 1 · OK</text>
+            <text x="532" y="113" fill="#D1491F" font-family="IBM Plex Mono, monospace" font-size="9" font-weight="600">▪ Item 2 · WARN</text>
+            <text x="532" y="129" fill="#46515E" font-family="IBM Plex Mono, monospace" font-size="9">▪ Signed Audit Log</text>
+
+            <!-- Footer strip -->
+            <rect x="16" y="178" width="648" height="36" rx="2" fill="#EAE8E0" stroke="#CFCBC0"/>
+            <text x="28" y="200" fill="#14191F" font-family="IBM Plex Mono, monospace" font-size="9.5">STANDARDS BASIS:  EU RED 2014/53/EU  ·  EMC 2014/30/EU  ·  IEC 62443-4-2  ·  MIL-STD-810H ENVIRONMENTAL</text>
+          </svg>
         </div>
-        <svg viewBox="0 0 460 300" width="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Rugged Industrial IoT Reference Architecture">
-          <rect x="0" y="0" width="460" height="300" rx="8" fill="#0B1117"/>
-          <!-- Node A -->
-          <rect x="16" y="24" width="142" height="176" rx="8" fill="#121C26" stroke="#F59E0B" stroke-width="1.6"/>
-          <text x="28" y="46" fill="#F59E0B" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600">NODE A · FIELD UNIT</text>
-          <text x="28" y="62" fill="#F1F5F9" font-family="Inter, sans-serif" font-size="11" font-weight="600">IP67 Aluminum Node</text>
-          <rect x="26" y="74" width="122" height="24" rx="4" fill="#172432" stroke="#223244"/>
-          <text x="34" y="90" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="9">STM32U5 + FreeRTOS</text>
-          <rect x="26" y="104" width="122" height="24" rx="4" fill="#172432" stroke="#223244"/>
-          <text x="34" y="120" fill="#38BDF8" font-family="JetBrains Mono, monospace" font-size="9">Secure Element AES256</text>
-          <rect x="26" y="134" width="122" height="24" rx="4" fill="#172432" stroke="#223244"/>
-          <text x="34" y="150" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="9">Iso-CAN / J1939 + ESD</text>
-          <rect x="26" y="164" width="122" height="24" rx="4" fill="#172432" stroke="#223244"/>
-          <text x="34" y="180" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="9">Flash Store-&amp;-Forward</text>
 
-          <!-- RF Link -->
-          <line x1="158" y1="112" x2="218" y2="112" stroke="#38BDF8" stroke-width="2" stroke-dasharray="5,4"/>
-          <polygon points="218,112 210,107 210,117" fill="#38BDF8"/>
-          <text x="163" y="98" fill="#38BDF8" font-family="JetBrains Mono, monospace" font-size="8.5">Sub-GHz</text>
-          <text x="163" y="128" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="8">Encrypted</text>
-
-          <!-- Node B -->
-          <rect x="220" y="42" width="112" height="140" rx="8" fill="#121C26" stroke="#38BDF8" stroke-width="1.6"/>
-          <text x="230" y="63" fill="#38BDF8" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600">NODE B · GW</text>
-          <text x="230" y="79" fill="#F1F5F9" font-family="Inter, sans-serif" font-size="10.5" font-weight="600">Depot Gateway</text>
-          <rect x="230" y="90" width="92" height="24" rx="4" fill="#172432" stroke="#223244"/>
-          <text x="236" y="106" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="8.5">Up to 32 Nodes</text>
-          <rect x="230" y="120" width="92" height="24" rx="4" fill="#172432" stroke="#223244"/>
-          <text x="236" y="136" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="8.5">Iso-RS485 / Eth</text>
-          <rect x="230" y="150" width="92" height="22" rx="4" fill="#172432" stroke="#223244"/>
-          <text x="236" y="164" fill="#22C55E" font-family="JetBrains Mono, monospace" font-size="8.5">Relay Alarm</text>
-
-          <!-- Uplink -->
-          <line x1="332" y1="112" x2="358" y2="112" stroke="#F59E0B" stroke-width="2"/>
-          <polygon points="358,112 350,107 350,117" fill="#F59E0B"/>
-
-          <!-- Operator PC -->
-          <rect x="360" y="60" width="86" height="104" rx="8" fill="#121C26" stroke="#223244" stroke-width="1.6"/>
-          <text x="370" y="82" fill="#F59E0B" font-family="JetBrains Mono, monospace" font-size="9.5">SN-OPS</text>
-          <text x="370" y="99" fill="#F1F5F9" font-family="Inter, sans-serif" font-size="10" font-weight="600">Operator UI</text>
-          <text x="370" y="118" fill="#22C55E" font-family="JetBrains Mono, monospace" font-size="8.5">• Item 1 OK</text>
-          <text x="370" y="132" fill="#F59E0B" font-family="JetBrains Mono, monospace" font-size="8.5">• Item 2 WARN</text>
-          <text x="370" y="146" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="8.5">• Audit Log</text>
-
-          <!-- Bottom bar -->
-          <rect x="16" y="218" width="430" height="66" rx="8" fill="#121C26" stroke="#223244"/>
-          <text x="28" y="240" fill="#F1F5F9" font-family="Space Grotesk, sans-serif" font-size="11" font-weight="600">Integrated Physical Delivery Streams</text>
-          <text x="28" y="259" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="9">FW (RTOS/Crypto)  +  HW (PCB/EMC/ESD)  +  MECH (IP67/Thermal)  +  IN-HOUSE ASSEMBLY</text>
-          <text x="28" y="274" fill="#38BDF8" font-family="JetBrains Mono, monospace" font-size="8.5">EU RED 2014/53/EU · EMC 2014/30/EU · IEC 62443-4-2 · MIL-STD-810H Environmental</text>
-        </svg>
+        <div class="fact-stack">
+          <div class="fact-card">
+            <div class="label mono">Core Team Setup</div>
+            <strong>9 Specialists</strong>
+            <span>HW, FW, Mech, V&amp;V, Architecture, Delivery, Engagement, Procurement &amp; Assembly Tech</span>
+          </div>
+          <div class="fact-card">
+            <div class="label mono">Operational Hubs</div>
+            <strong>Kyiv + Warsaw</strong>
+            <span>Kyiv R&amp;D, HIL &amp; Assembly Bench; Warsaw EU component &amp; client staging</span>
+          </div>
+          <div class="fact-card signal">
+            <div class="label mono">Year-1 Seed Budget</div>
+            <strong>€480,000 / yr</strong>
+            <span>Service model with HIL bench, RF analyzer, thermal imaging &amp; assembly tooling</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- CAPABILITIES -->
+  <!-- 01 CAPABILITIES -->
   <section id="capabilities">
     <div class="container">
-      <div class="sec-kicker mono">01 // Engineering Capabilities</div>
-      <h2 class="sec-title">Three Core Streams + In-House Assembly &amp; V&amp;V</h2>
-      <p class="sec-desc">We deliver complete cyber-physical products — never isolated code snippets. Hardware, firmware, and mechanics evolve together under a single System Architect.</p>
-      <div class="grid-3">
-        <div class="card">
-          <span class="card-tag mono">STREAM 01 · FIRMWARE</span>
-          <h3>Resilient &amp; Secure Firmware</h3>
-          <p>Deterministic embedded software for field-deployed power, logistics, and perimeter monitoring equipment.</p>
+      <div class="sec-head">
+        <div class="sec-num mono">Section 01 // Streams</div>
+        <div>
+          <h2>Three Integrated Streams + In-House Assembly</h2>
+          <p>Physical products fail when firmware, hardware, and mechanics are designed in silos. One System Architect holds interfaces and trade-offs across all three streams from Day 1.</p>
+        </div>
+      </div>
+
+      <div class="spec-grid-3">
+        <div class="spec-col">
+          <span class="col-code mono">STREAM A · FIRMWARE</span>
+          <h3>Deterministic &amp; Secure FW</h3>
+          <p>Layered embedded software engineered for unattended, offline-resilient defense-logistics equipment.</p>
           <ul class="spec-list">
             <li>STM32U5 / NXP / nRF53 bare-metal &amp; FreeRTOS</li>
-            <li>Hardware Secure Boot, AES-256-GCM, anti-tamper</li>
-            <li>CAN / J1939 / CAN FD / Modbus RS-485 stacks</li>
-            <li>Offline store-and-forward &amp; signed OTA updates</li>
+            <li>TrustZone Secure Boot &amp; SE050 AES-256-GCM</li>
+            <li>SAE J1939, CAN FD, Modbus RS-485 stacks</li>
+            <li>72h+ NOR flash store-and-forward &amp; anti-tamper</li>
           </ul>
         </div>
-        <div class="card">
-          <span class="card-tag mono">STREAM 02 · HARDWARE</span>
-          <h3>EMC/ESD-Hardened Electronics</h3>
-          <p>Multi-layer industrial PCBs engineered to survive high-EMI generators, surges, and extreme thermal swings.</p>
+        <div class="spec-col">
+          <span class="col-code mono">STREAM B · HARDWARE</span>
+          <h3>EMC &amp; Surge-Hardened PCB</h3>
+          <p>Multi-layer electronics engineered to survive generator EMI, cranking transients, and harsh surges.</p>
           <ul class="spec-list">
-            <li>Galvanically isolated CAN &amp; RS-485 transceivers</li>
-            <li>TVS, common-mode chokes &amp; MIL-grade power rails</li>
-            <li>Sub-GHz RF matching &amp; antenna layout (868 MHz)</li>
-            <li>Dual review: HW peer review + FW-on-HW review</li>
+            <li>Dedicated 2.5 kVrms isolated CAN &amp; RS-485 PHYs</li>
+            <li>TVS/ESD diodes, common-mode chokes &amp; RF cans</li>
+            <li>9–36V reverse-polarity &amp; load-dump front-end</li>
+            <li>Mandatory dual review: HW Peer + FW-on-HW</li>
           </ul>
         </div>
-        <div class="card">
-          <span class="card-tag mono">STREAM 03 · MECHANICS &amp; ASSEMBLY</span>
-          <h3>IP67 Enclosures &amp; Assembly Bench</h3>
-          <p>Ruggedized CNC/die-cast aluminum housings and in-house technical assembly to eliminate integration surprises.</p>
+        <div class="spec-col">
+          <span class="col-code mono">STREAM C · MECH &amp; ASSEMBLY</span>
+          <h3>IP67 Housing &amp; Assembly Bench</h3>
+          <p>Thermal-managed aluminum housings paired with in-house PCBA bring-up and custom rugged harnesses.</p>
           <ul class="spec-list">
-            <li>IP67 sealing, thermal paths (-30°C to +65°C)</li>
-            <li>Shock &amp; vibration mounting (MIL-STD-810H)</li>
-            <li>In-house PCBA bring-up, harness &amp; final assembly</li>
-            <li>HIL / SIL verification &amp; V-model traceability</li>
+            <li>IP67 CNC/die-cast aluminum (-30°C to +65°C)</li>
+            <li>MIL-STD-810H shock &amp; vibration mounting</li>
+            <li>In-house 3-level assembly (Mech, PCBA, Final)</li>
+            <li>HIL / SIL bench &amp; V-model traceability</li>
           </ul>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- COMPLIANCE & WORK MODEL -->
-  <section id="standards">
+  <!-- 02 COMPLIANCE & DELIVERY -->
+  <section id="compliance">
     <div class="container">
-      <div class="sec-kicker mono">02 // Standards &amp; Commercial Transparency</div>
-      <h2 class="sec-title">Risk-Managed Delivery: Gates, HARA &amp; Hybrid Contracting</h2>
-      <p class="sec-desc">Every engagement follows structured engineering phases with transparent exit gates, explicit hazard/threat analysis, and honest risk allocation between in-house engineering and external supply chains.</p>
-      <div class="grid-2">
-        <div class="card">
-          <span class="card-tag mono">REGULATORY &amp; SECURITY BASIS</span>
-          <h3>Conformity &amp; Cybersecurity by Design</h3>
-          <ul class="spec-list">
-            <li><strong>EU Market Conformity (CE):</strong> Aligned with applicable EU legislation — Radio Equipment Directive (RED 2014/53/EU), EMC Directive (2014/30/EU), RoHS — via harmonised standards.</li>
-            <li><strong>Industrial Cybersecurity:</strong> Threat Analysis &amp; Risk Assessment (TARA) and IEC 62443-4-2 embedded security controls.</li>
-            <li><strong>Environmental Ruggedness:</strong> Qualification profiles referencing MIL-STD-810H (thermal shock, vibration, ingress).</li>
-            <li><strong>IP &amp; Confidentiality:</strong> Clear contractual separation of Background IP vs. Foreground IP under NDA/MSA.</li>
+      <div class="sec-head">
+        <div class="sec-num mono">Section 02 // Governance</div>
+        <div>
+          <h2>Compliance Clarity &amp; Risk-Managed Hybrid Contracting</h2>
+          <p>We separate mandatory European legislation from voluntary harmonised standards, validate high-risk unknowns via HARA/TARA before PCB fabrication, and never inflate fixed prices to hide vendor uncertainty.</p>
+        </div>
+      </div>
+
+      <div class="grid-2" id="delivery">
+        <div class="panel">
+          <div class="col-code mono">REGULATORY &amp; IP DISCIPLINE</div>
+          <h3>EU Conformity, Cybersecurity &amp; IP Boundaries</h3>
+          <ul class="spec-list" style="border-top:none; padding-top:4px;">
+            <li><strong>CE Conformity (EU Law):</strong> Radio Equipment Directive (RED 2014/53/EU), EMC Directive (2014/30/EU), and RoHS via harmonised standards.</li>
+            <li><strong>Cybersecurity ≠ Safety:</strong> Separate HARA (unintended hardware/thermal faults) and TARA (intentional capture/spoofing, IEC 62443-4-2).</li>
+            <li><strong>Environmental Profile:</strong> MIL-STD-810H temperature/shock/vibration testing + IEC 60529 IP67.</li>
+            <li><strong>Contractual IP:</strong> Mutual NDA + explicit separation of Background IP vs. client-owned Foreground IP.</li>
           </ul>
         </div>
-        <div class="card" id="work">
-          <span class="card-tag mono">WAY OF WORK &amp; PRICING</span>
-          <h3>Phased Gates + Hybrid Contract Model</h3>
-          <ul class="spec-list">
-            <li><strong>R&amp;D → Gate G1 → PoC → Gate G2 → MVP → WP 1..N → Finalization</strong> (client retains stop/go authority at every gate).</li>
-            <li><strong>HARA / TARA-Driven PoC:</strong> High-risk unknowns (EMI packet loss, key tamper, enclosure heat) tested on real silicon before full design.</li>
-            <li><strong>Fixed Price (FP):</strong> R&amp;D, PoC, Finalization &amp; in-house Engineering / Architecture / Assembly.</li>
-            <li><strong>Capped T&amp;M (T&amp;M^) &amp; T&amp;M:</strong> MVP/WP uncertainty &amp; external PCB/CNC/component supply chains.</li>
+        <div class="panel accent">
+          <div class="col-code mono">WAY OF WORK &amp; HYBRID PRICING</div>
+          <h3>Phased Exit Gates + Honest Supply Split</h3>
+          <ul class="spec-list" style="border-top:none; padding-top:4px;">
+            <li><strong>Exit Gates (G1, G2):</strong> <code>R&amp;D → (G1) → HARA PoC → (G2) → MVP → WP 1–3 → Finalization</code> — client retains Proceed / Iterate / Hard Stop control.</li>
+            <li><strong>Fixed Price (FP):</strong> R&amp;D, PoC, Finalization, and all in-house Engineering / Architecture / Assembly.</li>
+            <li><strong>Capped T&amp;M (T&amp;M^ ±25%):</strong> MVP &amp; Working Packages executed in Jira Scrum sprints (≤ 80% capacity).</li>
+            <li><strong>Pass-Through T&amp;M:</strong> External bare PCB, CNC enclosures, Mouser/DigiKey components &amp; accredited EMC lab.</li>
           </ul>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- TEAM -->
+  <!-- 03 TEAM -->
   <section id="team">
     <div class="container">
-      <div class="sec-kicker mono">03 // Organization &amp; Setup</div>
-      <h2 class="sec-title">Cross-Functional Core Team (9 Specialists)</h2>
-      <p class="sec-desc">Compact, senior-led engineering structure combining Kyiv R&amp;D &amp; assembly capacity with a Warsaw EU logistics liaison hub. No inflated titles — every role maps directly to delivery accountability.</p>
+      <div class="sec-head">
+        <div class="sec-num mono">Section 03 // Organization</div>
+        <div>
+          <h2>Cross-Functional Core Team (9 Specialists)</h2>
+          <p>Every role maps to a concrete engineering, delivery, or supply-chain accountability — zero decorative titles.</p>
+        </div>
+      </div>
+
       <div class="table-wrap">
         <table>
           <thead>
-            <tr>
-              <th>Role</th>
-              <th>Lead / Specialist</th>
-              <th>Primary Delivery Accountability</th>
-            </tr>
+            <tr><th>Role</th><th>Specialist</th><th>Primary Delivery Accountability</th></tr>
           </thead>
           <tbody>
-            <tr><td><strong>Co-Founder &amp; System Architect</strong></td><td>Volodymyr Drohobytskyi</td><td>System architecture, interface control, HARA/TARA, client Technical Champion</td></tr>
+            <tr><td><strong>Co-Founder &amp; System Architect</strong></td><td>Volodymyr Drohobytskyi</td><td>System architecture, ICD, HARA/TARA, client Technical Champion</td></tr>
             <tr><td><strong>Co-Founder &amp; Delivery Manager</strong></td><td>Olena Kovalenko</td><td>Servant management, milestone governance, hybrid contracting, staffing</td></tr>
             <tr><td><strong>Lead Firmware Engineer</strong></td><td>Taras Melnyk</td><td>STM32U5 / FreeRTOS, Secure Boot, AES-256-GCM, J1939/CAN FD, Sub-GHz</td></tr>
-            <tr><td><strong>Senior Hardware Engineer</strong></td><td>Andrii Savchenko</td><td>Schematic, 6-layer PCB, galvanic isolation, ESD/EMC protection, BoM</td></tr>
-            <tr><td><strong>Mechanical &amp; Thermal Engineer</strong></td><td>Iryna Bondar</td><td>IP67 enclosures, thermal dissipation, MIL-STD-810H mounting</td></tr>
+            <tr><td><strong>Senior Hardware Engineer</strong></td><td>Andrii Savchenko</td><td>6-layer PCB, 2.5 kVrms isolation, ESD/EMC protection, BoM</td></tr>
+            <tr><td><strong>Mechanical &amp; Thermal Engineer</strong></td><td>Iryna Bondar</td><td>IP67 CNC aluminum enclosures, thermal dissipation, MIL-STD-810H mounts</td></tr>
             <tr><td><strong>Embedded QA &amp; V&amp;V Engineer</strong></td><td>Maksym Petrenko</td><td>HIL/SIL bench, V-model traceability, soak testing, EMC pre-compliance</td></tr>
             <tr><td><strong>Engagement Manager</strong></td><td>Kateryna Lysenko</td><td>Exhibition outreach, CRM qualification, follow-up cadence, RFI/RFQ</td></tr>
             <tr><td><strong>Procurement &amp; Logistics</strong></td><td>Dmytro Shevchenko</td><td>Mouser/DigiKey sourcing, PCB/CNC vendor tracking, EU/UA customs</td></tr>
-            <tr><td><strong>Hardware Assembly Technician</strong></td><td>Serhii Moroz</td><td>In-house mechanical assembly, PCBA bring-up/rework, rugged wire harnesses</td></tr>
+            <tr><td><strong>Hardware Assembly Technician</strong></td><td>Serhii Moroz</td><td>In-house mechanical assembly, PCBA bring-up/rework, custom wire harnesses</td></tr>
           </tbody>
         </table>
       </div>
     </div>
   </section>
 
-  <!-- EMBEDDED WORLD 2027 -->
-  <section id="ew2027">
-    <div class="container">
-      <div class="event-banner">
-        <div>
-          <div class="sec-kicker mono">04 // Upcoming Exhibition 2027</div>
-          <h2 class="sec-title" style="margin-bottom:8px;">Meet BastionGrid at embedded world 2027</h2>
-          <p style="color:var(--muted); font-size:0.94rem;">
-            See our live ruggedized IP67 telemetry node and isolated CAN/J1939 HIL test rig in action (running on dedicated wired booth Ethernet with local failover). Book a 20-minute technical discovery session with our System Architect.
-          </p>
-          <div class="event-meta mono">
-            <span class="event-chip">📅 March 16–18, 2027</span>
-            <span class="event-chip">📍 Exhibition Centre Nuremberg, Germany</span>
-            <span class="event-chip">🏛️ Hall 3 · Stand 3-418 (Simulated)</span>
-          </div>
-          <a href="https://www.embedded-world.de/" target="_blank" rel="noopener" class="btn btn-primary">Official embedded world Website →</a>
+  <!-- 04 EXHIBITION BAND (DARK PINE CONTRAST) -->
+  <section id="ew2027" class="exhibition-band">
+    <div class="container exhibition-grid">
+      <div>
+        <div class="mono" style="font-size:0.75rem; color:#F5B7A3; letter-spacing:0.14em; text-transform:uppercase;">Section 04 // Confirmed 2027 Exhibition</div>
+        <h2>Meet BastionGrid at embedded world 2027</h2>
+        <p>Inspect our live IP67 telemetry node and isolated CAN/J1939 HIL bench in Hall 3 — powered by dedicated wired booth Ethernet with offline failover. Book a 20-minute technical discovery directly with our System Architect.</p>
+        <div class="ex-meta mono">
+          <span class="ex-chip">📅 March 16–18, 2027</span>
+          <span class="ex-chip">📍 Exhibition Centre Nuremberg, Germany</span>
+          <span class="ex-chip">🏛️ Hall 3 · Stand 3-418 (Simulated)</span>
         </div>
-        <div class="card" style="background:rgba(11,17,23,0.75);">
-          <div class="mono" style="font-size:0.75rem; color:var(--amber); margin-bottom:8px;">DELEGATION ON SITE</div>
-          <ul class="spec-list" style="margin-top:0;">
-            <li><strong>Volodymyr Drohobytskyi</strong> — Co-Founder &amp; System Architect</li>
-            <li><strong>Kateryna Lysenko</strong> — Engagement Manager</li>
-            <li><strong>Olena Kovalenko</strong> — Co-Founder &amp; Delivery Manager</li>
-          </ul>
-        </div>
+        <a href="https://www.embedded-world.de/" target="_blank" rel="noopener" class="btn btn-signal">Official embedded world 2027 Website →</a>
+      </div>
+      <div class="delegation-box">
+        <div class="mono" style="font-size:0.72rem; color:#F5B7A3; letter-spacing:0.12em;">ON-SITE DELEGATION (3 ROLES)</div>
+        <ul>
+          <li><strong>Volodymyr Drohobytskyi</strong><br/>Co-Founder &amp; System Architect</li>
+          <li><strong>Kateryna Lysenko</strong><br/>Engagement Manager</li>
+          <li><strong>Olena Kovalenko</strong><br/>Co-Founder &amp; Delivery Manager</li>
+        </ul>
       </div>
     </div>
   </section>
 
-  <!-- CONTACT -->
-  <section id="contact">
+  <!-- 05 CONTACT -->
+  <section id="contact" style="border-bottom:none;">
     <div class="container">
-      <div class="sec-kicker mono">05 // Direct Contacts</div>
-      <h2 class="sec-title">Start a Technical Conversation</h2>
-      <div class="contact-grid">
-        <div class="card">
-          <h3>Volodymyr Drohobytskyi</h3>
-          <p style="margin-bottom:14px;">Co-Founder &amp; System Architect · BastionGrid Embedded</p>
-          <div class="contact-item"><span>Direct Email</span><a class="mono" href="mailto:v.drohobytskyi@bastiongrid.io">v.drohobytskyi@bastiongrid.io</a></div>
-          <div class="contact-item"><span>Business / RFI / RFQ</span><a class="mono" href="mailto:sales@bastiongrid.io">sales@bastiongrid.io</a></div>
-          <div class="contact-item"><span>GitHub</span><a class="mono" href="https://github.com/VDrogobytskyy" target="_blank" rel="noopener">github.com/VDrogobytskyy</a></div>
-          <div class="contact-item"><span>LinkedIn</span><a class="mono" href="https://www.linkedin.com/in/volodymyr-drogobytskyyy-2071643a0/" target="_blank" rel="noopener">in/volodymyr-drogobytskyyy-2071643a0</a></div>
-          <div class="contact-item"><span>Website</span><a class="mono" href="https://vdrogobytskyy.github.io/bastiongrid/">vdrogobytskyy.github.io/bastiongrid</a></div>
+      <div class="sec-head">
+        <div class="sec-num mono">Section 05 // Contacts</div>
+        <div>
+          <h2>Direct Engineering Contact</h2>
+          <p>Reach out directly to schedule a 25-minute technical discovery call or exchange an NDA and RFI/RFC package.</p>
         </div>
-        <div class="card">
-          <h3>Operational Hubs &amp; Readiness</h3>
-          <ul class="spec-list">
-            <li><strong>Kyiv R&amp;D Lab:</strong> Embedded engineering, HIL/EMC pre-compliance bench, in-house mechanical/PCBA assembly.</li>
-            <li><strong>Warsaw EU Liaison:</strong> Component buffer stock, EU customs staging, direct access to DACH &amp; Nordic clients.</li>
-            <li><strong>Typical Discovery Path:</strong> 20-min intro call → NDA → Technical follow-up with architects → RFI/RFC → Versioned Proposal v1.0.</li>
-            <li><strong>Transparency Note:</strong> Reference architecture and exhibition booth number shown on this site are part of an academic engineering simulation for KPI Embedded Software Engineering.</li>
+      </div>
+
+      <div class="grid-2">
+        <div class="panel">
+          <h3>Volodymyr Drohobytskyi</h3>
+          <p style="font-size:0.88rem; color:var(--ink-soft); margin-bottom:14px;">Co-Founder &amp; System Architect · BastionGrid Embedded</p>
+          <div class="contact-row"><span>Direct Email</span><a class="mono" href="mailto:v.drohobytskyi@bastiongrid.io">v.drohobytskyi@bastiongrid.io</a></div>
+          <div class="contact-row"><span>Pre-Sale / RFI / RFQ</span><a class="mono" href="mailto:sales@bastiongrid.io">sales@bastiongrid.io</a></div>
+          <div class="contact-row"><span>GitHub</span><a class="mono" href="https://github.com/VDrogobytskyy" target="_blank" rel="noopener">github.com/VDrogobytskyy</a></div>
+          <div class="contact-row"><span>LinkedIn</span><a class="mono" href="https://www.linkedin.com/in/volodymyr-drogobytskyyy-2071643a0/" target="_blank" rel="noopener">in/volodymyr-drogobytskyyy-2071643a0</a></div>
+          <div class="contact-row"><span>Public Website</span><a class="mono" href="https://vdrogobytskyy.github.io/bastiongrid/">vdrogobytskyy.github.io/bastiongrid</a></div>
+        </div>
+        <div class="panel accent">
+          <h3>Operational Hubs &amp; Engagement Path</h3>
+          <ul class="spec-list" style="border-top:none; padding-top:4px;">
+            <li><strong>Kyiv R&amp;D Lab:</strong> Hardware/firmware engineering, HIL &amp; EMC pre-compliance bench, in-house mechanical/PCBA assembly.</li>
+            <li><strong>Warsaw EU Hub:</strong> Component consolidation, customs staging, rapid on-site travel to DACH &amp; Nordic clients.</li>
+            <li><strong>Standard Path:</strong> 25-min discovery → Mutual NDA → Expert Follow-Up #2 → RFI/RFC → Proposal v1.0 &amp; Jira Kickoff.</li>
+            <li><strong>Simulation Disclosure:</strong> Reference architecture and exhibition stand allocation shown on this one-pager are part of an academic engineering simulation (KPI).</li>
           </ul>
         </div>
       </div>
@@ -440,9 +538,9 @@
 </main>
 
 <footer>
-  <div class="container footer-flex">
+  <div class="container footer-inner">
     <div>© 2026–2027 <strong>BastionGrid Embedded</strong> · Kyiv, Ukraine / Warsaw, Poland</div>
-    <div class="mono" style="font-size:0.75rem;">Academic Simulation · Embedded Software Engineering (KPI)</div>
+    <div class="mono" style="font-size:0.73rem;">Academic Simulation · Embedded Software Engineering (KPI)</div>
   </div>
 </footer>
 
