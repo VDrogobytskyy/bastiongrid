@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stages 7–8 · Client Meeting, CRM, Follow-Up #1 &amp; #2, RFI/RFC &amp; Conversion — BastionGrid</title>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #F4F3EE; --surface: #FFFFFF; --surface-2: #EAE8E0; --border: #CFCBC0;
+      --amber: #1B3A2B; --cyan: #D1491F; --green: #1B3A2B; --text: #14191F; --muted: #46515E;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'IBM Plex Sans', -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.56; padding: 24px; }
+    .mono { font-family: 'IBM Plex Mono', monospace; }
+    h1, h2, h3 { font-family: 'IBM Plex Sans', sans-serif; letter-spacing: -0.02em; }
+    .wrap { max-width: 1140px; margin: 0 auto; display: grid; gap: 20px; }
+
+    .topbar {
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
+      padding: 16px 22px; background: var(--surface); border: 1.5px solid #14191F; border-top: 4px solid #1B3A2B; border-radius: 3px;
+    }
+    .tabs { display: flex; gap: 8px; flex-wrap: wrap; }
+    .tab-btn {
+      background: var(--surface-2); border: 1px solid var(--border); color: var(--muted);
+      padding: 8px 14px; border-radius: 3px; cursor: pointer; font-weight: 600; font-size: 0.85rem;
+    }
+    .tab-btn.active { background: #1B3A2B; color: #FFFFFF; border-color: #1B3A2B; }
+
+    .panel { display: none; gap: 18px; }
+    .panel.active { display: grid; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-top: 3px solid #1B3A2B; border-radius: 3px; padding: 22px; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .badge { display: inline-block; padding: 3px 10px; border-radius: 2px; font-size: 0.72rem; font-weight: 600; }
+    .b-amber { background: #FCECE6; color: #D1491F; border: 1px solid #D1491F; }
+    .b-cyan { background: #EAE8E0; color: #14191F; border: 1px solid #CFCBC0; }
+    .b-green { background: #E6EFEA; color: #1B3A2B; border: 1px solid #1B3A2B; }
+
+    .dialogue { display: grid; gap: 10px; margin-top: 12px; }
+    .msg { padding: 13px 16px; border-radius: 3px; font-size: 0.89rem; border: 1px solid var(--border); }
+    .msg-us { background: #FAF9F5; border-left: 4px solid #1B3A2B; }
+    .msg-client { background: #FFFFFF; border-left: 4px solid #D1491F; }
+    .msg-note { background: #E6EFEA; border-left: 4px solid #1B3A2B; font-size: 0.84rem; color: #12281D; }
+    .who { font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; font-weight: 600; margin-bottom: 4px; color: #1B3A2B; }
+    .msg-client .who { color: #D1491F; }
+
+    .email { background: #FAF9F5; border: 1px solid var(--border); border-left: 3px solid #1B3A2B; border-radius: 3px; padding: 16px 18px; margin-top: 12px; }
+    .email-head { font-size: 0.78rem; color: var(--muted); border-bottom: 1px solid var(--border); padding-bottom: 8px; margin-bottom: 10px; }
+    .email-head strong { color: var(--text); }
+    .email-body { font-size: 0.88rem; color: #1F2937; display: grid; gap: 8px; }
+
+    .cal-box {
+      background: #E6EFEA; border: 1.5px solid #1B3A2B;
+      border-radius: 3px; padding: 14px 18px; margin-top: 12px; font-size: 0.84rem; color: #14191F;
+    }
+    .chat-box {
+      background: #FCECE6; border: 1.5px dashed #D1491F; border-radius: 3px; padding: 14px 16px; margin-top: 12px;
+      font-size: 0.82rem; display: grid; gap: 6px; color: #14191F;
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 0.84rem; margin-top: 12px; }
+    th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+    th { background: var(--surface-2); color: #14191F; font-family: 'IBM Plex Mono', monospace; font-size: 0.73rem; text-transform: uppercase; }
+    @media (max-width: 860px) { .grid-2 { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <div>
+      <strong style="font-family:'Space Grotesk',sans-serif;">BASTIONGRID · Stages 7–8 Client Pipeline &amp; Follow-Up Portal</strong>
+      <div class="mono" style="font-size:0.72rem; color:var(--muted);">Client (Simulated): NordShield Critical Logistics AB (Gothenburg, Sweden) · Henrik Lindqvist</div>
+    </div>
+    <div class="tabs">
+      <button class="tab-btn active" onclick="openTab('booth', this)">1. Booth Meeting &amp; CRM (Stage 7)</button>
+      <button class="tab-btn" onclick="openTab('thread', this)">2. Single Thread: FU1 → FU2 → Client (Stage 8)</button>
+      <button class="tab-btn" onclick="openTab('rfi', this)">3. RFI &amp; RFC Exchange (Stage 8)</button>
+    </div>
+  </div>
+
+  <!-- TAB 1: BOOTH MEETING & CRM -->
+  <section id="booth" class="panel active">
+    <div class="grid-2">
+      <div class="card">
+        <span class="badge b-amber mono">STAGE 7 · BOOTH DISCOVERY DIALOGUE (MAR 17, 2027)</span>
+        <h2 style="margin-top:8px;">Pain Before Pitch — Stand 3-418</h2>
+        <p style="font-size:0.86rem; color:var(--muted); margin-top:4px;">Visitor: <strong>Henrik Lindqvist</strong>, VP of Field Infrastructure Engineering, <em>NordShield Critical Logistics AB</em> (Gothenburg, Sweden). Role clarity: BastionGrid = <strong>Engineering Service Vendor</strong>.</p>
+        <div class="dialogue">
+          <div class="msg msg-us">
+            <div class="who">Volodymyr Drohobytskyi (Co-Founder &amp; System Architect)</div>
+            "Welcome to BastionGrid! This rig is running live J1939 telemetry from an emulated generator over an isolated CAN bus and encrypted 868 MHz link. What kind of field equipment are you working with?"
+          </div>
+          <div class="msg msg-client">
+            <div class="who">Henrik Lindqvist (NordShield Critical Logistics AB)</div>
+            "We build mobile tactical power units and cold-chain supply depots for Nordic civil-defense and military logistics. Honestly, commercial cellular IoT trackers keep dying on us — generator EMI kills the comms, batteries freeze at -25°C, and cellular isn't even available in remote sites."
+          </div>
+          <div class="msg msg-us">
+            <div class="who">Volodymyr Drohobytskyi</div>
+            "That's exactly the failure mode we engineer around — galvanic isolation on CAN/J1939, TVS/EMC shielding, hardware Secure Element AES-256-GCM over Sub-GHz with offline flash buffering, inside an IP67 thermal enclosure. Are you looking to buy a finished off-the-shelf box, or an engineering partner to build a custom unit to your specs?"
+          </div>
+          <div class="msg msg-client">
+            <div class="who">Henrik Lindqvist</div>
+            "Custom engineering under our IP — off-the-shelf never passes our security review. By the way, who are your current defense clients? Can you share a direct contact there?"
+          </div>
+          <div class="msg msg-us">
+            <div class="who">Volodymyr Drohobytskyi (NDA &amp; Trust Boundary — Lecture 09)</div>
+            "We protect all customer identities strictly under NDA, so I never share direct client contacts without explicit written consent — the same protection we'd give NordShield. What I can show next week is our reference hardware architecture, EMC pre-compliance approach, and our FW/HW leads."
+          </div>
+          <div class="msg msg-client">
+            <div class="who">Henrik Lindqvist</div>
+            "Fair answer — I respect that. Let's scan your QR card and set up a 25-minute call next week once I'm back in Gothenburg."
+          </div>
+          <div class="msg msg-note">
+            <strong>KPI Achieved (Lecture 09):</strong> Qualified Lead + Agreed Follow-Up · No blind contract pitching · Logged in CRM the same evening!
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <span class="badge b-cyan mono">SAME-DAY CRM CAPTURE · EMBEDDED WORLD 2027</span>
+        <h2 style="margin-top:8px;">Exhibition Conversion Funnel &amp; CRM Log</h2>
+        <div class="mono" style="font-size:0.8rem; background:#FAF9F5; padding:12px; border-radius:8px; border:1px solid var(--border); margin-top:10px;">
+          N_contact = 18 &nbsp;|&nbsp; p_relevant = 44% (8) &nbsp;|&nbsp; p_meeting = 50% &nbsp;→&nbsp; <strong style="color:var(--green);">N_follow-up = 4 Qualified Meetings</strong>
+        </div>
+        <table>
+          <thead><tr><th>Contact &amp; Org</th><th>Detected Pain</th><th>Role Fit</th><th>Next Step &amp; Owner</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>Henrik Lindqvist</strong><br/><span style="color:var(--cyan);">NordShield AB (SE)</span></td>
+              <td>EMI/cold failures on COTS trackers for tactical generators &amp; cold-chain depots; needs offline Sub-GHz + J1939 + crypto</td>
+              <td><span class="badge b-green">Vendor (High)</span></td>
+              <td>FU #1 email Mar 19 by <strong>Volodymyr</strong> (familiar face)</td>
+            </tr>
+            <tr>
+              <td><strong>Markus Weber</strong><br/><span style="color:var(--muted);">AlpineGrid GmbH (DE)</span></td>
+              <td>Substation Modbus RS-485 surge failures</td>
+              <td><span class="badge b-amber">Vendor (Med)</span></td>
+              <td>FU #1 email Mar 20 by Kateryna</td>
+            </tr>
+            <tr>
+              <td><strong>Sami Korhonen</strong><br/><span style="color:var(--muted);">ArcticPower Oy (FI)</span></td>
+              <td>Seeking OEM battery BMS supplier</td>
+              <td><span class="badge b-cyan">Qualified</span></td>
+              <td>FU #1 email Mar 22 by Volodymyr</td>
+            </tr>
+            <tr>
+              <td><strong>Generic Media Agency</strong></td>
+              <td>Wanted marketing video ("production")</td>
+              <td>Disqualified</td>
+              <td>No follow-up (domain mismatch)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- TAB 2: SINGLE EMAIL THREAD FU1 -> FU2 -> CLIENT -->
+  <section id="thread" class="panel">
+    <div class="card">
+      <span class="badge b-amber mono">STAGE 8 · ONE CONTINUOUS EMAIL THREAD FROM EXHIBITION TO CONTRACT (LECTURE 12)</span>
+      <h2 style="margin-top:8px;">Subject: BastionGrid × NordShield — embedded world 2027 · Rugged Field Telemetry</h2>
+
+      <!-- FU1 Email -->
+      <div class="email">
+        <div class="email-head mono">
+          <strong>[1] FOLLOW-UP #1 · Mar 19, 2027 · 09:40 EET</strong><br/>
+          <strong>From:</strong> Volodymyr Drohobytskyi &lt;v.drohobytskyi@bastiongrid.io&gt; <em>(Familiar Face — Lecture 12)</em> &nbsp;|&nbsp; <strong>CC:</strong> Kateryna Lysenko &lt;k.lysenko@bastiongrid.io&gt;<br/>
+          <strong>To:</strong> Henrik Lindqvist &lt;h.lindqvist@nordshield-sim.se&gt;
+        </div>
+        <div class="email-body">
+          <p>Hi Henrik,</p>
+          <p>Great speaking with you on Wednesday at Stand 3-418 at embedded world 2027 about your tactical generator and cold-chain depot telemetry challenges (EMI resilience, -30°C operation, and offline Sub-GHz security).</p>
+          <p>As agreed, I'd love to schedule a focused 25-minute intro &amp; discovery call with our Engagement Manager (Kateryna) and Delivery Manager (Olena). Would any of these slots work for you?</p>
+          <p class="mono" style="color:var(--cyan);">• Tue, Mar 23 · 10:00 CET (11:00 EET)<br/>• Wed, Mar 24 · 14:00 CET (15:00 EET)<br/>• Thu, Mar 25 · 16:00 CET (17:00 EET)</p>
+          <p>If none of these fit your schedule, please propose a time that works best for you and we'll adapt. Best regards, Volodymyr.</p>
+        </div>
+      </div>
+
+      <!-- Client Reply + Calendar Invite -->
+      <div class="email" style="border-color:var(--cyan);">
+        <div class="email-head mono">
+          <strong>[2] CLIENT REPLY · Mar 20, 2027 · 11:15 CET</strong> · <strong>From:</strong> Henrik Lindqvist
+        </div>
+        <div class="email-body">
+          <p>Hi Volodymyr — good to reconnect! Wednesday, March 24 at 14:00 CET works well. Please send over the invite.</p>
+        </div>
+        <div class="cal-box mono">
+          <strong>📅 CALENDAR INVITE SENT IMMEDIATELY (No extra filler email — Lecture 11)</strong><br/>
+          Title: BastionGrid × NordShield — Technical Intro &amp; Discovery · Wed, Mar 24, 2027 · 14:00–14:30 CET · Google Meet<br/>
+          Attendees: Volodymyr Drohobytskyi (Familiar Face/Arch), Kateryna Lysenko (Engagement), Olena Kovalenko (Delivery), Henrik Lindqvist (NordShield)<br/>
+          <strong>Outcome of Follow-Up #1:</strong> Interactive 10-slide BastionGrid deck (dialogue, NOT monologue) confirmed concrete need: <strong>SentinelNode-IIoT</strong> (Node A on generator/container + Node B Depot Gateway + Operator Console). Agreed to hold Expert Follow-Up #2 with NordShield's Principal RF/HW Engineer.
+        </div>
+      </div>
+
+      <!-- FU2 Invitation -->
+      <div class="email">
+        <div class="email-head mono">
+          <strong>[3] FOLLOW-UP #2 INVITATION (EXPERT MEETING) · Mar 25, 2027 · 10:05 EET</strong><br/>
+          <strong>From:</strong> Kateryna Lysenko &lt;k.lysenko@bastiongrid.io&gt; <em>(Engagement Manager)</em> &nbsp;|&nbsp; <strong>CC:</strong> Volodymyr Drohobytskyi<br/>
+          <strong>To:</strong> Henrik Lindqvist &lt;h.lindqvist@nordshield-sim.se&gt;; Astrid Holm &lt;a.holm@nordshield-sim.se&gt;
+        </div>
+        <div class="email-body">
+          <p>Hi Henrik, Hi Astrid,</p>
+          <p>Following yesterday's discussion, we are preparing a <strong>tailored technical deck</strong> focused strictly on your generator/depot telemetry problem (no generic company slides). To be transparent, we will bring our domain specialists so you can evaluate real depth: <strong>Volodymyr</strong> (System Architect &amp; familiar face), <strong>Taras Melnyk</strong> (Lead Firmware/Crypto), <strong>Andrii Savchenko</strong> (Senior HW/EMC), and <strong>Iryna Bondar</strong> (IP67 Thermal/Mech).</p>
+          <p><strong>Platform:</strong> Which tool is most convenient for NordShield — Microsoft Teams, Google Meet, or Zoom? We will generate the invite on your preferred platform.</p>
+          <p><strong>Proposed Slots (45 min):</strong> Mon Mar 29 · 09:30 CET &nbsp;|&nbsp; Tue Mar 30 · 13:30 CET &nbsp;|&nbsp; Wed Mar 31 · 15:30 CET (or your preferred slot).</p>
+          <p><strong>Agenda:</strong> 1) Introductions · 2) Problem decomposition (Node A / RF / Node B / Console) · 3) Relevant EMC/Crypto/IP67 cases · 4) NordShield technical deep-dive (15 min) · 5) RFI/RFC &amp; Proposal next steps.</p>
+        </div>
+        <div class="chat-box mono">
+          <div style="color:var(--amber);"><strong>🖥️ SECOND-SCREEN INTERNAL ORCHESTRATION CHAT DURING FU #2 (MS Teams · Mar 30, 2027 · Lecture 12)</strong></div>
+          <div><span style="color:var(--cyan);">[14:12] Kateryna (Engagement):</span> "Astrid just raised her eyebrows on galvanic isolation + 24V cranking transients — Volodymyr, hand screen to Andrii now."</div>
+          <div><span style="color:var(--amber);">[14:21] Olena (Delivery):</span> "@Taras STOP — don't quote exact sprint hours yet before we see their RFI and HARA risks!"</div>
+          <div><span style="color:var(--green);">[14:38] Kateryna (Engagement):</span> "Strong technical resonance! Closing now to request formal RFI + RFC and promising tailored deck PDF as follow-up leverage."</div>
+        </div>
+      </div>
+
+      <!-- Conversion into Client -->
+      <div class="email" style="border-color:var(--green);">
+        <div class="email-head mono">
+          <strong>[4] RFI / RFC → PROPOSAL v1.0 → CONVERSION INTO CLIENT · Mar 31 – Apr 6, 2027</strong>
+        </div>
+        <div class="email-body">
+          <p><strong>Mar 31 (Henrik):</strong> Sent formal <strong>RFI (12-question capability spreadsheet)</strong> + <strong>RFC (Request for Clarification)</strong> asking for BastionGrid's system architecture vision, HARA PoC plan, and hybrid commercial estimate.</p>
+          <p><strong>Apr 2 (BastionGrid):</strong> Returned consistent filled RFI (`rfi_response_nordshield.csv`), <strong>Proposal v1.0</strong> (`Proposal_BastionGrid_NordShield_v1.0.md`), and <strong>Architecture Description AD-SN-001 v1.0</strong> (without giving away free detailed schematics before contract!).</p>
+          <p style="color:var(--green);"><strong>Apr 6 (Henrik — CONVERSION!):</strong> <em>"Your HARA-driven PoC and hybrid FP/T&amp;M split make complete sense to our board. Mutual NDA and Phase 1 SOW (R&amp;D + HARA PoC + Architecture Baseline) are signed. Let's close this pre-sale thread and open our official Engineering Kickoff thread and Jira workspace!"</em></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TAB 3: RFI & RFC -->
+  <section id="rfi" class="panel">
+    <div class="card">
+      <span class="badge b-cyan mono">STAGE 8 · FORMAL PROCUREMENT ARTIFACTS</span>
+      <h2 style="margin-top:8px;">NordShield RFC &amp; BastionGrid Filled RFI Response</h2>
+      <div class="email" style="margin-bottom:16px;">
+        <div class="email-head mono"><strong>RFC — Request for Clarification (Course Terminology · Mar 31, 2027)</strong></div>
+        <div class="email-body">
+          <p>"Hi Volodymyr &amp; Kateryna — could you please describe in a structured Proposal + Architecture Description how BastionGrid would design, verify, and deliver our rugged field asset telemetry system (<strong>SentinelNode-IIoT</strong>: Node A on 24V tactical generators/cold-chain containers, Node B depot gateway, and offline Operator Console), including risk mitigation via PoC, EU conformity path, timeline, and commercial model?"</p>
+        </div>
+      </div>
+
+      <h3 style="margin-bottom:6px;">Filled RFI Table (Excerpt — Full CSV in <code>04_client_and_followups/rfi_response_nordshield.csv</code>)</h3>
+      <table>
+        <thead><tr><th>ID</th><th>NordShield RFI Question</th><th>BastionGrid Answer (Auditable &amp; Consistent)</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">RFI-01</td><td>Embedded MCU/SoC families used in production?</td><td>STM32U5 (TrustZone, ultra-low power), NXP S32K/i.MX RT, Nordic nRF53.</td></tr>
+          <tr><td class="mono">RFI-02</td><td>RTOS &amp; bare-metal firmware capability?</td><td>Yes — FreeRTOS, Zephyr, bare-metal C/C++ with static analysis (MISRA C guidelines).</td></tr>
+          <tr><td class="mono">RFI-03</td><td>Industrial fieldbus &amp; galvanic isolation experience?</td><td>Yes — CAN 2.0B, CAN FD, SAE J1939, Modbus RS-485 with dedicated digital isolators &amp; TVS/ESD protection.</td></tr>
+          <tr><td class="mono">RFI-04</td><td>Embedded cybersecurity &amp; hardware root of trust?</td><td>Yes — Secure Boot, AES-256-GCM authenticated encryption, external Secure Element (ATECC608 / SE050), IEC 62443-4-2 aligned.</td></tr>
+          <tr><td class="mono">RFI-05</td><td>EU CE conformity &amp; EMC/RF testing experience?</td><td>Yes — EU RED 2014/53/EU &amp; EMC 2014/30/EU technical file readiness; in-house pre-compliance bench + accredited EU lab partnership.</td></tr>
+          <tr><td class="mono">RFI-06</td><td>Environmental ruggedization capability?</td><td>Yes — IP67 CNC/die-cast aluminum enclosures, -30°C to +65°C thermal design, MIL-STD-810H shock/vibration test profiles.</td></tr>
+          <tr><td class="mono">RFI-07</td><td>Do you own PCB/CNC manufacturing factories?</td><td><strong>No</strong> (honest answer — avoids RFI double-bottom trap!). We design, supervise vendors, and run <strong>in-house PCBA/mechanical assembly &amp; harness bench</strong>.</td></tr>
+          <tr><td class="mono">RFI-08</td><td>Preferred task tracking &amp; CI/CD transparency?</td><td>Jira Cloud (Scrum, guarded workflow, GitHub integration), Confluence documentation, bi-weekly client Sprint Demos.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>
+
+<script>
+  function openTab(id, btn) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BastionGrid Embedded — Company &amp; Discovery Presentation (10 Slides)</title>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --paper: #F4F3EE; --white: #FFFFFF; --stone: #EAE8E0; --ink: #14191F; --ink-soft: #46515E;
+      --line: #CFCBC0; --pine: #1B3A2B; --pine-dark: #12281D; --pine-tint: #E6EFEA;
+      --signal: #D1491F; --signal-tint: #FCECE6;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+      background: #E2E0D7; color: var(--ink);
+      min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 20px;
+    }
+    .mono { font-family: 'IBM Plex Mono', monospace; }
+
+    .deck-controls {
+      width: 100%; max-width: 1120px; display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 12px; font-size: 0.84rem; color: var(--ink-soft);
+    }
+    .btn {
+      background: var(--white); border: 1.5px solid var(--ink); color: var(--ink);
+      padding: 7px 14px; border-radius: 3px; cursor: pointer; font-weight: 600; font-size: 0.83rem;
+    }
+    .btn:hover { background: var(--stone); }
+    .btn-pine { background: var(--pine); color: #FFFFFF; border-color: var(--pine); }
+    .btn-pine:hover { background: var(--pine-dark); }
+
+    .stage {
+      width: 100%; max-width: 1120px; aspect-ratio: 16 / 9;
+      background: var(--paper); border: 2px solid var(--ink); border-radius: 4px;
+      position: relative; overflow: hidden; box-shadow: 0 22px 54px rgba(20,25,31,0.18);
+    }
+    .stage::before {
+      content: ""; position: absolute; top: 0; left: 0; right: 0; height: 6px;
+      background: linear-gradient(90deg, var(--pine) 0%, var(--pine) 78%, var(--signal) 78%, var(--signal) 100%);
+      z-index: 5;
+    }
+    .slide {
+      display: none; width: 100%; height: 100%; padding: 42px 52px 46px;
+      flex-direction: column; justify-content: space-between;
+    }
+    .slide.active { display: flex; }
+    .slide.cover { background: var(--pine); color: #F4F3EE; }
+    .slide.cover .slide-top { border-bottom-color: rgba(255,255,255,0.22); }
+    .slide.cover .slide-foot { border-top-color: rgba(255,255,255,0.22); color: #BFD0C6; }
+    .slide.cover .card { background: var(--pine-dark); border-color: rgba(255,255,255,0.22); color: #F4F3EE; }
+    .slide.cover .card p { color: #C5D6CC; }
+    .slide.cover h1 { color: #FFFFFF; }
+    .slide.cover h1 span { color: #F79A7A; }
+    .slide.cover .lead { color: #D4E2DA; }
+
+    .slide-top {
+      display: flex; justify-content: space-between; align-items: center;
+      border-bottom: 1.5px solid var(--ink); padding-bottom: 11px; margin-bottom: 14px;
+    }
+    .slide-brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 0.9rem; letter-spacing: 0.08em; }
+    .slide-kicker { color: var(--signal); font-size: 0.76rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; }
+
+    .slide-body { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 16px; }
+    .slide h1 { font-size: 2.6rem; line-height: 1.08; letter-spacing: -0.025em; }
+    .slide h2 { font-size: 1.82rem; line-height: 1.15; letter-spacing: -0.02em; }
+    .slide h2 span { color: var(--pine); text-decoration: underline; text-decoration-color: var(--signal); text-underline-offset: 5px; text-decoration-thickness: 2.5px; }
+    .lead { color: var(--ink-soft); font-size: 1rem; max-width: 780px; line-height: 1.52; }
+
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    .card {
+      background: var(--white); border: 1px solid var(--line); border-top: 3px solid var(--pine);
+      border-radius: 3px; padding: 17px 19px;
+    }
+    .card.signal { border-top-color: var(--signal); }
+    .card h3 { font-size: 1.02rem; margin-bottom: 7px; }
+    .card p, .card li { font-size: 0.86rem; color: var(--ink-soft); line-height: 1.48; }
+    .card ul { list-style: none; display: grid; gap: 6px; }
+    .card li::before { content: "▪ "; color: var(--signal); font-weight: 700; }
+
+    .ask-box {
+      background: var(--signal-tint); border-left: 4px solid var(--signal);
+      padding: 11px 16px; border-radius: 2px; font-size: 0.86rem; color: var(--ink);
+    }
+    .ask-box strong { color: var(--signal); }
+
+    .slide-foot {
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.74rem; color: var(--ink-soft); border-top: 1px solid var(--line);
+      padding-top: 10px; margin-top: 10px;
+    }
+    .badge {
+      display: inline-block; padding: 4px 10px; border-radius: 2px; font-size: 0.72rem; font-weight: 600;
+      background: var(--signal); color: #FFFFFF; letter-spacing: 0.08em;
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 0.84rem; background: var(--white); }
+    th, td { padding: 9px 12px; border-bottom: 1px solid var(--line); text-align: left; }
+    th { background: var(--stone); color: var(--ink); font-family: 'IBM Plex Mono', monospace; font-size: 0.73rem; text-transform: uppercase; }
+
+    .qr-box { background: #FFFFFF; border: 1.5px solid var(--ink); padding: 8px; border-radius: 3px; width: 136px; height: 136px; }
+    .qr-box svg { width: 100%; height: 100%; display: block; }
+
+    @media print {
+      body { background: #fff; padding: 0; }
+      .deck-controls { display: none; }
+      .stage { aspect-ratio: auto; max-width: none; border: none; box-shadow: none; overflow: visible; }
+      .slide { display: flex !important; page-break-after: always; height: 190mm; border: 1px solid #14191F; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="deck-controls">
+  <div class="mono">BastionGrid Embedded · Follow-Up &amp; Discovery Deck (Press ← / →)</div>
+  <div style="display:flex; gap:8px; align-items:center;">
+    <button class="btn" onclick="prevSlide()">← Prev</button>
+    <span class="mono" id="counter" style="min-width:64px; text-align:center;">1 / 10</span>
+    <button class="btn btn-pine" onclick="nextSlide()">Next →</button>
+    <button class="btn" onclick="window.print()">Print / PDF</button>
+  </div>
+</div>
+
+<div class="stage">
+  <!-- SLIDE 1 (DARK PINE EDITORIAL COVER) -->
+  <section class="slide cover active">
+    <div class="slide-top">
+      <div class="slide-brand">
+        <svg width="26" height="26" viewBox="0 0 40 40" fill="none"><rect x="2" y="2" width="36" height="36" rx="3" fill="#12281D" stroke="#F4F3EE" stroke-width="2"/><path d="M11 11 H29 V29 H11 Z" fill="none" stroke="#F4F3EE" stroke-width="1.7"/><rect x="16.5" y="16.5" width="7" height="7" fill="#D1491F"/></svg>
+        BASTIONGRID EMBEDDED
+      </div>
+      <span class="badge mono">EMBEDDED WORLD 2027 · FOLLOW-UP DECK</span>
+    </div>
+    <div class="slide-body">
+      <div class="mono" style="color:#F79A7A; font-size:0.78rem; letter-spacing:0.14em;">RUGGED INDUSTRIAL IoT · DEFENSE LOGISTICS &amp; CRITICAL INFRASTRUCTURE</div>
+      <h1>Resilient Embedded Telemetry Built for <span>Harsh Field</span> Operations</h1>
+      <p class="lead">Turnkey Firmware, EMC-Hardened Hardware, IP67 Mechanics, and In-House Assembly for European defense-logistics and infrastructure integrators.</p>
+      <div class="grid-3" style="margin-top:8px;">
+        <div class="card"><div class="mono" style="color:#F79A7A; font-size:0.72rem;">PRESENTER</div><h3 style="color:#fff;">Volodymyr Drohobytskyi</h3><p>Co-Founder &amp; System Architect</p></div>
+        <div class="card"><div class="mono" style="color:#F79A7A; font-size:0.72rem;">FOOTPRINT</div><h3 style="color:#fff;">Kyiv Lab + Warsaw Hub</h3><p>9-Specialist Cross-Functional Core</p></div>
+        <div class="card"><div class="mono" style="color:#F79A7A; font-size:0.72rem;">ENGAGEMENT MODEL</div><h3 style="color:#fff;">Engineering Service</h3><p>R&amp;D → PoC → MVP → V&amp;V → Delivery</p></div>
+      </div>
+    </div>
+    <div class="slide-foot mono"><span>https://vdrogobytskyy.github.io/bastiongrid/</span><span>v.drohobytskyi@bastiongrid.io · Slide 01 / 10</span></div>
+  </section>
+
+  <!-- SLIDE 2 -->
+  <section class="slide">
+    <div class="slide-top">
+      <div class="slide-brand">BASTIONGRID EMBEDDED</div>
+      <span class="slide-kicker mono">02 // AGENDA &amp; DISCOVERY GOAL</span>
+    </div>
+    <div class="slide-body">
+      <h2>25-Minute Interactive <span>Discovery Agenda</span></h2>
+      <div class="grid-2">
+        <div class="card">
+          <h3>Proposed Session Flow</h3>
+          <ul>
+            <li><strong>00–04 min:</strong> Round-table introductions (our team &amp; your role/goals)</li>
+            <li><strong>04–09 min:</strong> BastionGrid capabilities &amp; reference IIoT topology</li>
+            <li><strong>09–19 min:</strong> <strong>Your operational challenges</strong> — live technical discovery</li>
+            <li><strong>19–23 min:</strong> Risk-managed delivery model (gates, HARA, hybrid pricing)</li>
+            <li><strong>23–25 min:</strong> Next step: RFI / RFC exchange &amp; specialist follow-up</li>
+          </ul>
+        </div>
+        <div class="card signal">
+          <h3>Expected Outcome Today</h3>
+          <ul>
+            <li>Confirm whether our embedded capabilities match your field bottleneck</li>
+            <li>Identify target scope boundaries (HW / FW / Mech / Compliance)</li>
+            <li>Agree on concrete next step (RFI questionnaire or specialist deep-dive)</li>
+            <li><strong>No blind monologue</strong> — stop us at any slide to examine your case</li>
+          </ul>
+        </div>
+      </div>
+      <div class="ask-box"><strong>Discovery Check-In:</strong> Before we dive into our capabilities — could you share your role and what operational pain made our booth demo catch your eye?</div>
+    </div>
+    <div class="slide-foot mono"><span>BastionGrid Embedded · Follow-Up Deck</span><span>Slide 02 / 10</span></div>
+  </section>
+
+  <!-- SLIDE 3 -->
+  <section class="slide">
+    <div class="slide-top">
+      <div class="slide-brand">BASTIONGRID EMBEDDED</div>
+      <span class="slide-kicker mono">03 // COMPANY PROFILE &amp; SETUP</span>
+    </div>
+    <div class="slide-body">
+      <h2>Compact Senior Core, <span>Full Physical Delivery Chain</span></h2>
+      <div class="grid-4">
+        <div class="card"><div class="mono" style="color:var(--signal); font-size:0.72rem;">MODEL</div><h3>Service Company</h3><p>Verified embedded engineering capacity — never competing with client products.</p></div>
+        <div class="card"><div class="mono" style="color:var(--pine); font-size:0.72rem;">TEAM SIZE</div><h3>9 Specialists</h3><p>Architect, Delivery Mgr, FW, HW, Mech, QA/V&amp;V, Engagement, Procurement, Assembly Tech.</p></div>
+        <div class="card"><div class="mono" style="color:var(--pine); font-size:0.72rem;">LOCATIONS</div><h3>Kyiv + Warsaw</h3><p>Kyiv R&amp;D &amp; HIL/Assembly lab; Warsaw EU component &amp; client staging hub.</p></div>
+        <div class="card signal"><div class="mono" style="color:var(--signal); font-size:0.72rem;">Y1 BUDGET</div><h3>€480k Setup</h3><p>Equipped with HIL rig, RF analyzer, thermal camera, and assembly bench.</p></div>
+      </div>
+      <div class="card">
+        <h3>Why Dual-Hub + In-House Assembly Matters</h3>
+        <p>External fabs build bare PCBs and CNC housings — our in-house Assembly Technician closes mechanical assembly, PCBA bring-up, and custom harness integration under one roof, slashing rework delays.</p>
+      </div>
+    </div>
+    <div class="slide-foot mono"><span>BastionGrid Embedded · Follow-Up Deck</span><span>Slide 03 / 10</span></div>
+  </section>
+
+  <!-- SLIDE 4 -->
+  <section class="slide">
+    <div class="slide-top">
+      <div class="slide-brand">BASTIONGRID EMBEDDED</div>
+      <span class="slide-kicker mono">04 // THREE CORE ENGINEERING STREAMS</span>
+    </div>
+    <div class="slide-body">
+      <h2>Co-Engineered <span>Firmware, Hardware &amp; Mechanics</span></h2>
+      <div class="grid-3">
+        <div class="card">
+          <div class="mono" style="color:var(--pine); font-size:0.72rem; margin-bottom:6px; font-weight:600;">STREAM A · FIRMWARE</div>
+          <h3>STM32 / RTOS / Crypto</h3>
+          <ul>
+            <li>Application → FreeRTOS/Middleware → HAL → MCU</li>
+            <li>TrustZone Secure Boot &amp; AES-256-GCM</li>
+            <li>SAE J1939 / CAN FD / Modbus RS-485</li>
+            <li>72h store-and-forward flash ring buffer</li>
+          </ul>
+        </div>
+        <div class="card signal">
+          <div class="mono" style="color:var(--signal); font-size:0.72rem; margin-bottom:6px; font-weight:600;">STREAM B · HARDWARE</div>
+          <h3>Isolated &amp; EMC-Hardened</h3>
+          <ul>
+            <li>6-layer PCB, 9–36V transient power rail</li>
+            <li>Dedicated 2.5 kVrms isolated CAN/RS-485</li>
+            <li>TVS/ESD diodes, chokes &amp; RF shield can</li>
+            <li>Dual review: HW Peer + FW-on-HW</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="mono" style="color:var(--pine); font-size:0.72rem; margin-bottom:6px; font-weight:600;">STREAM C · MECHANICS &amp; V&amp;V</div>
+          <h3>IP67 &amp; Field Survival</h3>
+          <ul>
+            <li>CNC/die-cast IP67 aluminum housings</li>
+            <li>Thermal dissipation (-30°C to +65°C)</li>
+            <li>MIL-STD-810H shock/vibration mounts</li>
+            <li>HIL/SIL bench &amp; V-model traceability</li>
+          </ul>
+        </div>
+      </div>
+      <div class="ask-box"><strong>Interactive Question:</strong> Across firmware, rugged electronics, and enclosure/EMC survival — which layer currently causes the biggest field failures for your team?</div>
+    </div>
+    <div class="slide-foot mono"><span>BastionGrid Embedded · Follow-Up Deck</span><span>Slide 04 / 10</span></div>
+  </section>
+
+  <!-- SLIDE 5 -->
+  <section class="slide">
+    <div class="slide-top">
+      <div class="slide-brand">BASTIONGRID EMBEDDED</div>
+      <span class="slide-kicker mono">05 // REFERENCE CAPABILITY ARCHITECTURE</span>
+    </div>
+    <div class="slide-body">
+      <h2>Reference Topology: <span>Field Asset Telemetry</span></h2>
+      <div class="grid-2">
+        <div class="card">
+          <h3>End-to-End 3-Part Architecture</h3>
+          <ul>
+            <li><strong>Node A (`SN-NODE`):</strong> IP67 node bolted to tactical generator or cold-chain container; reads isolated J1939/CAN + temp/vibration/tamper.</li>
+            <li><strong>Encrypted Sub-GHz Link:</strong> 868 MHz LoRa/FSK with AES-256-GCM, anti-replay counters, and 72h offline flash buffering.</li>
+            <li><strong>Node B (`SN-GW`):</strong> Aggregates up to 32 field nodes; isolated RS-485/Ethernet + dry-contact relay alarm.</li>
+            <li><strong>Operator Console (`SN-OPS`):</strong> Offline-first workstation showing prioritized alerts (`Item 1 / 2 / 3`) and audit logs.</li>
+          </ul>
+        </div>
+        <div class="card signal" style="display:flex; flex-direction:column; justify-content:center;">
+          <div class="mono" style="color:var(--signal); font-size:0.74rem; font-weight:600; margin-bottom:10px;">PHYSICAL &amp; PROTOCOL STACK</div>
+          <div style="display:grid; gap:7px;" class="mono">
+            <div style="padding:8px 12px; background:var(--paper); border-left:4px solid var(--pine); font-size:0.79rem;">L4 · Application: Telemetry Engine &amp; Anomaly Rules</div>
+            <div style="padding:8px 12px; background:var(--paper); border-left:4px solid var(--signal); font-size:0.79rem;">L3 · Middleware: FreeRTOS, SE050 AES-GCM, J1939</div>
+            <div style="padding:8px 12px; background:var(--paper); border-left:4px solid var(--pine); font-size:0.79rem;">L2 · HAL &amp; Drivers: STM32U5 HAL, SPI/CAN/Flash</div>
+            <div style="padding:8px 12px; background:var(--paper); border-left:4px solid var(--ink); font-size:0.79rem;">L1 · Physical: 2.5 kVrms Iso-CAN, RF Front-End, TVS</div>
+            <div style="padding:8px 12px; background:var(--paper); border-left:4px solid var(--signal); font-size:0.79rem;">L0 · Mechanics: IP67 CNC Aluminum + Thermal Pad</div>
+          </div>
+        </div>
+      </div>
+      <div class="ask-box"><strong>Interactive Question:</strong> Do your field assets expose J1939/CAN or RS-485 — and must telemetry continue working with zero cellular coverage?</div>
+    </div>
+    <div class="slide-foot mono"><span>BastionGrid Embedded · Follow-Up Deck</span><span>Slide 05 / 10</span></div>
+  </section>
+
+  <!-- SLIDE 6 -->
+  <section class="slide">
+    <div class="slide-top">
+      <div class="slide-brand">BASTIONGRID EMBEDDED</div>
+      <span class="slide-kicker mono">06 // REGULATORY, SECURITY &amp; IP DISCIPLINE</span>
+    </div>
+    <div class="slide-body">
+      <h2>Safety, Cybersecurity &amp; <span>EU Conformity</span> — Clearly Separated</h2>
+      <div class="grid-3">
+        <div class="card">
+          <div class="mono" style="color:var(--pine); font-size:0.72rem; font-weight:600; margin-bottom:6px;">EU MARKET CONFORMITY</div>
+          <h3>CE as Conformity Process</h3>
+          <ul>
+            <li>RED 2014/53/EU (868 MHz radio)</li>
+            <li>EMC Directive 2014/30/EU &amp; RoHS</li>
+            <li>Harmonised standards → presumption of conformity</li>
+            <li>In-house pre-compliance before accredited lab</li>
+          </ul>
+        </div>
+        <div class="card signal">
+          <div class="mono" style="color:var(--signal); font-size:0.72rem; font-weight:600; margin-bottom:6px;">CYBERSECURITY ≠ SAFETY</div>
+          <h3>HARA + TARA</h3>
+          <ul>
+            <li>Safety: unintended hardware/thermal faults</li>
+            <li>Cybersecurity: intentional capture &amp; spoofing</li>
+            <li>IEC 62443-4-2 controls, Secure Boot, SE050</li>
+            <li>MIL-STD-810H environmental qualification</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="mono" style="color:var(--pine); font-size:0.72rem; font-weight:600; margin-bottom:6px;">LEGAL &amp; IP OWNERSHIP</div>
+          <h3>Contractual Clarity</h3>
+          <ul>
+            <li>Mutual NDA before deep design exchange</li>
+            <li>Explicit Background IP vs. Foreground IP clauses</li>
+            <li>Full handover of schematics, BoM, CAD &amp; source code</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="slide-foot mono"><span>BastionGrid Embedded · Follow-Up Deck</span><span>Slide 06 / 10</span></div>
+  </section>
+
+  <!-- SLIDE 7 -->
+  <section class="slide">
+    <div class="slide-top">
+      <div class="slide-brand">BASTIONGRID EMBEDDED</div>
+      <span class="slide-kicker mono">07 // WAY OF WORK &amp; GATES</span>
+    </div>
+    <div class="slide-body">
+      <h2>De-Risked Delivery: <span>Phases, Exit Gates &amp; HARA PoC</span></h2>
+      <div class="card" style="background:var(--pine); color:#fff; border:none;">
+        <div class="mono" style="font-size:0.86rem; text-align:center; padding:8px;">
+          <span style="color:#F79A7A;">[1. R&amp;D · 1 mo]</span> → <strong>(G1)</strong> →
+          <span style="color:#F79A7A;">[2. HARA PoC · 2.5 mo]</span> → <strong>(G2)</strong> →
+          <span>[3. MVP · 1 mo]</span> →
+          <span>[4. WP 1–3 · 4.5 mo]</span> →
+          <span style="color:#A7F3D0;">[5. Finalization · 0.5 mo]</span>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>Why Exit Gates Protect Your Budget</h3>
+          <ul>
+            <li><strong>Three valid outcomes at G1/G2:</strong> Proceed / Iterate with alternate silicon / Hard Stop before tooling spend.</li>
+            <li><strong>Cone of Uncertainty:</strong> R&amp;D &amp; PoC narrow schedule/cost variance before committing to PCB &amp; CNC fabrication.</li>
+          </ul>
+        </div>
+        <div class="card signal">
+          <h3>HARA-Driven Proof of Concept</h3>
+          <ul>
+            <li>The full engineering team runs HARA/TARA together before writing production code.</li>
+            <li>Top risks (generator EMI packet loss, physical capture, +65°C heat) are proven on real eval silicon first.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="slide-foot mono"><span>BastionGrid Embedded · Follow-Up Deck</span><span>Slide 07 / 10</span></div>
+  </section>
+
+  <!-- SLIDE 8 -->
+  <section class="slide">
+    <div class="slide-top">
+      <div class="slide-brand">BASTIONGRID EMBEDDED</div>
+      <span class="slide-kicker mono">08 // COMMERCIAL MODEL</span>
+    </div>
+    <div class="slide-body">
+      <h2>Transparent <span>Hybrid Commercial Model</span></h2>
+      <p class="lead">We never hide volatile factory supply-chain risks inside an inflated Fixed Price — we split in-house accountability from external vendors.</p>
+      <div style="border:1.5px solid var(--ink); border-radius:3px; overflow:hidden;">
+        <table>
+          <thead><tr><th>Scope / Phase</th><th>Pricing Model</th><th>Risk Rationale</th></tr></thead>
+          <tbody>
+            <tr><td><strong>R&amp;D &amp; HARA-Driven PoC</strong></td><td><strong style="color:var(--pine);">Fixed Price (FP)</strong></td><td>Bounded timebox protected by explicit Gate G1 &amp; G2 criteria</td></tr>
+            <tr><td><strong>In-House Engineering &amp; Assembly</strong></td><td><strong style="color:var(--pine);">FP or Capped T&amp;M (T&amp;M^ ±25%)</strong></td><td>Predictable velocity; MVP/WP features managed in Jira sprints (≤ 80% capacity)</td></tr>
+            <tr><td><strong>External Vendors (PCB, CNC, BoM, Lab, Shipping)</strong></td><td><strong style="color:var(--signal);">Time &amp; Material (Pass-Through)</strong></td><td>Real supplier invoices &amp; lead times without hidden FP risk markups</td></tr>
+            <tr><td><strong>Finalization &amp; Artifact Handover</strong></td><td><strong style="color:var(--pine);">Fixed Price (FP)</strong></td><td>Full Git repos, schematics, STEP CAD, V&amp;V reports &amp; SOPs owned by client</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="slide-foot mono"><span>BastionGrid Embedded · Follow-Up Deck</span><span>Slide 08 / 10</span></div>
+  </section>
+
+  <!-- SLIDE 9 -->
+  <section class="slide">
+    <div class="slide-top">
+      <div class="slide-brand">BASTIONGRID EMBEDDED</div>
+      <span class="slide-kicker mono">09 // ENGINEERING TRANSPARENCY IN JIRA</span>
+    </div>
+    <div class="slide-body">
+      <h2>Traceable Execution: <span>From Architecture to Sprints</span></h2>
+      <div class="grid-3">
+        <div class="card">
+          <h3>1. Precondition First</h3>
+          <p>Criteria, COTS benchmarks, system requirements, architecture, team setup, tooling, workflow, and Git/Jira ecosystem before coding.</p>
+        </div>
+        <div class="card signal">
+          <h3>2. Guarded Workflow</h3>
+          <p>Strict transitions (`To Do → Take → In Progress ↔ HOLD → In Review → Done`) — zero bypass to Done, mandatory review comments.</p>
+        </div>
+        <div class="card">
+          <h3>3. Sustainable 80% Capacity</h3>
+          <p>Team Story Points voting, joint Kyiv &amp; client holiday calendars (incl. Midsommar), and 20% buffer for routines &amp; context switching.</p>
+        </div>
+      </div>
+      <div class="ask-box"><strong>Transparency Commitment:</strong> Direct read/review access to our Jira Scrum space, GitHub repos, and bi-weekly Sprint Demos.</div>
+    </div>
+    <div class="slide-foot mono"><span>BastionGrid Embedded · Follow-Up Deck</span><span>Slide 09 / 10</span></div>
+  </section>
+
+  <!-- SLIDE 10 -->
+  <section class="slide">
+    <div class="slide-top">
+      <div class="slide-brand">BASTIONGRID EMBEDDED</div>
+      <span class="slide-kicker mono">10 // NEXT STEPS &amp; CONTACTS</span>
+    </div>
+    <div class="slide-body">
+      <h2>Proposed <span>Next Step</span></h2>
+      <div class="grid-2" style="align-items:center;">
+        <div class="card">
+          <h3>From Discovery to Proposal v1.0</h3>
+          <ul>
+            <li><strong>Step 1 (Today):</strong> Confirm target problem &amp; sign mutual NDA</li>
+            <li><strong>Step 2 (This Week):</strong> Expert Follow-Up #2 with FW/HW/Mech leads</li>
+            <li><strong>Step 3 (Next Week):</strong> Exchange RFI / RFC (Request for Clarification)</li>
+            <li><strong>Step 4 (+7 Days):</strong> Deliver Versioned Proposal v1.0 &amp; Architecture AD-SN-001</li>
+          </ul>
+          <div style="margin-top:14px; font-size:0.84rem; padding-top:10px; border-top:1px solid var(--line);" class="mono">
+            <div><strong style="color:var(--pine);">Volodymyr Drohobytskyi</strong> · Co-Founder &amp; System Architect</div>
+            <div style="color:var(--signal); margin-top:4px; font-weight:600;">v.drohobytskyi@bastiongrid.io</div>
+            <div style="color:var(--ink-soft);">github.com/VDrogobytskyy</div>
+          </div>
+        </div>
+        <div class="card signal" style="display:flex; flex-direction:column; align-items:center; text-align:center; gap:12px;">
+          <div class="qr-box"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37 37" shape-rendering="crispEdges">
+<rect width="37" height="37" fill="#ffffff"/>
+<g fill="#0B1117">
+<rect x="4" y="4" width="1" height="1"/><rect x="5" y="4" width="1" height="1"/><rect x="6" y="4" width="1" height="1"/><rect x="7" y="4" width="1" height="1"/><rect x="8" y="4" width="1" height="1"/><rect x="9" y="4" width="1" height="1"/><rect x="10" y="4" width="1" height="1"/><rect x="13" y="4" width="1" height="1"/><rect x="16" y="4" width="1" height="1"/><rect x="17" y="4" width="1" height="1"/><rect x="18" y="4" width="1" height="1"/><rect x="19" y="4" width="1" height="1"/><rect x="22" y="4" width="1" height="1"/><rect x="23" y="4" width="1" height="1"/><rect x="26" y="4" width="1" height="1"/><rect x="27" y="4" width="1" height="1"/><rect x="28" y="4" width="1" height="1"/><rect x="29" y="4" width="1" height="1"/><rect x="30" y="4" width="1" height="1"/><rect x="31" y="4" width="1" height="1"/><rect x="32" y="4" width="1" height="1"/><rect x="4" y="5" width="1" height="1"/><rect x="10" y="5" width="1" height="1"/><rect x="14" y="5" width="1" height="1"/><rect x="15" y="5" width="1" height="1"/><rect x="16" y="5" width="1" height="1"/><rect x="17" y="5" width="1" height="1"/><rect x="19" y="5" width="1" height="1"/><rect x="22" y="5" width="1" height="1"/><rect x="23" y="5" width="1" height="1"/><rect x="26" y="5" width="1" height="1"/><rect x="32" y="5" width="1" height="1"/><rect x="4" y="6" width="1" height="1"/><rect x="6" y="6" width="1" height="1"/><rect x="7" y="6" width="1" height="1"/><rect x="8" y="6" width="1" height="1"/><rect x="10" y="6" width="1" height="1"/><rect x="12" y="6" width="1" height="1"/><rect x="13" y="6" width="1" height="1"/><rect x="14" y="6" width="1" height="1"/><rect x="16" y="6" width="1" height="1"/><rect x="23" y="6" width="1" height="1"/><rect x="26" y="6" width="1" height="1"/><rect x="28" y="6" width="1" height="1"/><rect x="29" y="6" width="1" height="1"/><rect x="30" y="6" width="1" height="1"/><rect x="32" y="6" width="1" height="1"/><rect x="4" y="7" width="1" height="1"/><rect x="6" y="7" width="1" height="1"/><rect x="7" y="7" width="1" height="1"/><rect x="8" y="7" width="1" height="1"/><rect x="10" y="7" width="1" height="1"/><rect x="13" y="7" width="1" height="1"/><rect x="14" y="7" width="1" height="1"/><rect x="15" y="7" width="1" height="1"/><rect x="18" y="7" width="1" height="1"/><rect x="19" y="7" width="1" height="1"/><rect x="20" y="7" width="1" height="1"/><rect x="22" y="7" width="1" height="1"/><rect x="26" y="7" width="1" height="1"/><rect x="28" y="7" width="1" height="1"/><rect x="29" y="7" width="1" height="1"/><rect x="30" y="7" width="1" height="1"/><rect x="32" y="7" width="1" height="1"/><rect x="4" y="8" width="1" height="1"/><rect x="6" y="8" width="1" height="1"/><rect x="7" y="8" width="1" height="1"/><rect x="8" y="8" width="1" height="1"/><rect x="10" y="8" width="1" height="1"/><rect x="14" y="8" width="1" height="1"/><rect x="17" y="8" width="1" height="1"/><rect x="18" y="8" width="1" height="1"/><rect x="19" y="8" width="1" height="1"/><rect x="21" y="8" width="1" height="1"/><rect x="22" y="8" width="1" height="1"/><rect x="23" y="8" width="1" height="1"/><rect x="24" y="8" width="1" height="1"/><rect x="26" y="8" width="1" height="1"/><rect x="28" y="8" width="1" height="1"/><rect x="29" y="8" width="1" height="1"/><rect x="30" y="8" width="1" height="1"/><rect x="32" y="8" width="1" height="1"/><rect x="4" y="9" width="1" height="1"/><rect x="10" y="9" width="1" height="1"/><rect x="13" y="9" width="1" height="1"/><rect x="18" y="9" width="1" height="1"/><rect x="19" y="9" width="1" height="1"/><rect x="20" y="9" width="1" height="1"/><rect x="21" y="9" width="1" height="1"/><rect x="23" y="9" width="1" height="1"/><rect x="24" y="9" width="1" height="1"/><rect x="26" y="9" width="1" height="1"/><rect x="32" y="9" width="1" height="1"/><rect x="4" y="10" width="1" height="1"/><rect x="5" y="10" width="1" height="1"/><rect x="6" y="10" width="1" height="1"/><rect x="7" y="10" width="1" height="1"/><rect x="8" y="10" width="1" height="1"/><rect x="9" y="10" width="1" height="1"/><rect x="10" y="10" width="1" height="1"/><rect x="12" y="10" width="1" height="1"/><rect x="14" y="10" width="1" height="1"/><rect x="16" y="10" width="1" height="1"/><rect x="18" y="10" width="1" height="1"/><rect x="20" y="10" width="1" height="1"/><rect x="22" y="10" width="1" height="1"/><rect x="24" y="10" width="1" height="1"/><rect x="26" y="10" width="1" height="1"/><rect x="27" y="10" width="1" height="1"/><rect x="28" y="10" width="1" height="1"/><rect x="29" y="10" width="1" height="1"/><rect x="30" y="10" width="1" height="1"/><rect x="31" y="10" width="1" height="1"/><rect x="32" y="10" width="1" height="1"/><rect x="12" y="11" width="1" height="1"/><rect x="13" y="11" width="1" height="1"/><rect x="14" y="11" width="1" height="1"/><rect x="16" y="11" width="1" height="1"/><rect x="17" y="11" width="1" height="1"/><rect x="18" y="11" width="1" height="1"/><rect x="21" y="11" width="1" height="1"/><rect x="22" y="11" width="1" height="1"/><rect x="23" y="11" width="1" height="1"/><rect x="4" y="12" width="1" height="1"/><rect x="5" y="12" width="1" height="1"/><rect x="6" y="12" width="1" height="1"/><rect x="8" y="12" width="1" height="1"/><rect x="9" y="12" width="1" height="1"/><rect x="10" y="12" width="1" height="1"/><rect x="11" y="12" width="1" height="1"/><rect x="12" y="12" width="1" height="1"/><rect x="14" y="12" width="1" height="1"/><rect x="15" y="12" width="1" height="1"/><rect x="17" y="12" width="1" height="1"/><rect x="21" y="12" width="1" height="1"/><rect x="23" y="12" width="1" height="1"/><rect x="25" y="12" width="1" height="1"/><rect x="26" y="12" width="1" height="1"/><rect x="30" y="12" width="1" height="1"/><rect x="4" y="13" width="1" height="1"/><rect x="11" y="13" width="1" height="1"/><rect x="14" y="13" width="1" height="1"/><rect x="15" y="13" width="1" height="1"/><rect x="20" y="13" width="1" height="1"/><rect x="21" y="13" width="1" height="1"/><rect x="22" y="13" width="1" height="1"/><rect x="24" y="13" width="1" height="1"/><rect x="25" y="13" width="1" height="1"/><rect x="26" y="13" width="1" height="1"/><rect x="29" y="13" width="1" height="1"/><rect x="32" y="13" width="1" height="1"/><rect x="5" y="14" width="1" height="1"/><rect x="7" y="14" width="1" height="1"/><rect x="8" y="14" width="1" height="1"/><rect x="10" y="14" width="1" height="1"/><rect x="13" y="14" width="1" height="1"/><rect x="17" y="14" width="1" height="1"/><rect x="25" y="14" width="1" height="1"/><rect x="26" y="14" width="1" height="1"/><rect x="27" y="14" width="1" height="1"/><rect x="30" y="14" width="1" height="1"/><rect x="31" y="14" width="1" height="1"/><rect x="32" y="14" width="1" height="1"/><rect x="4" y="15" width="1" height="1"/><rect x="5" y="15" width="1" height="1"/><rect x="6" y="15" width="1" height="1"/><rect x="7" y="15" width="1" height="1"/><rect x="8" y="15" width="1" height="1"/><rect x="12" y="15" width="1" height="1"/><rect x="15" y="15" width="1" height="1"/><rect x="17" y="15" width="1" height="1"/><rect x="19" y="15" width="1" height="1"/><rect x="21" y="15" width="1" height="1"/><rect x="23" y="15" width="1" height="1"/><rect x="26" y="15" width="1" height="1"/><rect x="28" y="15" width="1" height="1"/><rect x="31" y="15" width="1" height="1"/><rect x="4" y="16" width="1" height="1"/><rect x="9" y="16" width="1" height="1"/><rect x="10" y="16" width="1" height="1"/><rect x="12" y="16" width="1" height="1"/><rect x="16" y="16" width="1" height="1"/><rect x="17" y="16" width="1" height="1"/><rect x="20" y="16" width="1" height="1"/><rect x="21" y="16" width="1" height="1"/><rect x="23" y="16" width="1" height="1"/><rect x="25" y="16" width="1" height="1"/><rect x="26" y="16" width="1" height="1"/><rect x="29" y="16" width="1" height="1"/><rect x="31" y="16" width="1" height="1"/><rect x="32" y="16" width="1" height="1"/><rect x="4" y="17" width="1" height="1"/><rect x="9" y="17" width="1" height="1"/><rect x="11" y="17" width="1" height="1"/><rect x="12" y="17" width="1" height="1"/><rect x="13" y="17" width="1" height="1"/><rect x="15" y="17" width="1" height="1"/><rect x="16" y="17" width="1" height="1"/><rect x="17" y="17" width="1" height="1"/><rect x="20" y="17" width="1" height="1"/><rect x="24" y="17" width="1" height="1"/><rect x="25" y="17" width="1" height="1"/><rect x="26" y="17" width="1" height="1"/><rect x="29" y="17" width="1" height="1"/><rect x="32" y="17" width="1" height="1"/><rect x="7" y="18" width="1" height="1"/><rect x="8" y="18" width="1" height="1"/><rect x="9" y="18" width="1" height="1"/><rect x="10" y="18" width="1" height="1"/><rect x="11" y="18" width="1" height="1"/><rect x="12" y="18" width="1" height="1"/><rect x="14" y="18" width="1" height="1"/><rect x="15" y="18" width="1" height="1"/><rect x="16" y="18" width="1" height="1"/><rect x="17" y="18" width="1" height="1"/><rect x="20" y="18" width="1" height="1"/><rect x="22" y="18" width="1" height="1"/><rect x="25" y="18" width="1" height="1"/><rect x="29" y="18" width="1" height="1"/><rect x="31" y="18" width="1" height="1"/><rect x="32" y="18" width="1" height="1"/><rect x="6" y="19" width="1" height="1"/><rect x="8" y="19" width="1" height="1"/><rect x="9" y="19" width="1" height="1"/><rect x="11" y="19" width="1" height="1"/><rect x="14" y="19" width="1" height="1"/><rect x="16" y="19" width="1" height="1"/><rect x="17" y="19" width="1" height="1"/><rect x="18" y="19" width="1" height="1"/><rect x="21" y="19" width="1" height="1"/><rect x="26" y="19" width="1" height="1"/><rect x="27" y="19" width="1" height="1"/><rect x="29" y="19" width="1" height="1"/><rect x="31" y="19" width="1" height="1"/><rect x="5" y="20" width="1" height="1"/><rect x="7" y="20" width="1" height="1"/><rect x="8" y="20" width="1" height="1"/><rect x="10" y="20" width="1" height="1"/><rect x="11" y="20" width="1" height="1"/><rect x="15" y="20" width="1" height="1"/><rect x="17" y="20" width="1" height="1"/><rect x="20" y="20" width="1" height="1"/><rect x="21" y="20" width="1" height="1"/><rect x="23" y="20" width="1" height="1"/><rect x="24" y="20" width="1" height="1"/><rect x="25" y="20" width="1" height="1"/><rect x="26" y="20" width="1" height="1"/><rect x="27" y="20" width="1" height="1"/><rect x="29" y="20" width="1" height="1"/><rect x="31" y="20" width="1" height="1"/><rect x="32" y="20" width="1" height="1"/><rect x="5" y="21" width="1" height="1"/><rect x="11" y="21" width="1" height="1"/><rect x="12" y="21" width="1" height="1"/><rect x="15" y="21" width="1" height="1"/><rect x="17" y="21" width="1" height="1"/><rect x="18" y="21" width="1" height="1"/><rect x="20" y="21" width="1" height="1"/><rect x="21" y="21" width="1" height="1"/><rect x="22" y="21" width="1" height="1"/><rect x="24" y="21" width="1" height="1"/><rect x="25" y="21" width="1" height="1"/><rect x="26" y="21" width="1" height="1"/><rect x="29" y="21" width="1" height="1"/><rect x="30" y="21" width="1" height="1"/><rect x="32" y="21" width="1" height="1"/><rect x="4" y="22" width="1" height="1"/><rect x="6" y="22" width="1" height="1"/><rect x="7" y="22" width="1" height="1"/><rect x="9" y="22" width="1" height="1"/><rect x="10" y="22" width="1" height="1"/><rect x="11" y="22" width="1" height="1"/><rect x="12" y="22" width="1" height="1"/><rect x="14" y="22" width="1" height="1"/><rect x="17" y="22" width="1" height="1"/><rect x="18" y="22" width="1" height="1"/><rect x="26" y="22" width="1" height="1"/><rect x="28" y="22" width="1" height="1"/><rect x="31" y="22" width="1" height="1"/><rect x="32" y="22" width="1" height="1"/><rect x="5" y="23" width="1" height="1"/><rect x="6" y="23" width="1" height="1"/><rect x="7" y="23" width="1" height="1"/><rect x="8" y="23" width="1" height="1"/><rect x="9" y="23" width="1" height="1"/><rect x="15" y="23" width="1" height="1"/><rect x="17" y="23" width="1" height="1"/><rect x="20" y="23" width="1" height="1"/><rect x="21" y="23" width="1" height="1"/><rect x="22" y="23" width="1" height="1"/><rect x="25" y="23" width="1" height="1"/><rect x="26" y="23" width="1" height="1"/><rect x="29" y="23" width="1" height="1"/><rect x="31" y="23" width="1" height="1"/><rect x="4" y="24" width="1" height="1"/><rect x="7" y="24" width="1" height="1"/><rect x="8" y="24" width="1" height="1"/><rect x="9" y="24" width="1" height="1"/><rect x="10" y="24" width="1" height="1"/><rect x="11" y="24" width="1" height="1"/><rect x="12" y="24" width="1" height="1"/><rect x="13" y="24" width="1" height="1"/><rect x="14" y="24" width="1" height="1"/><rect x="16" y="24" width="1" height="1"/><rect x="17" y="24" width="1" height="1"/><rect x="19" y="24" width="1" height="1"/><rect x="20" y="24" width="1" height="1"/><rect x="21" y="24" width="1" height="1"/><rect x="24" y="24" width="1" height="1"/><rect x="25" y="24" width="1" height="1"/><rect x="26" y="24" width="1" height="1"/><rect x="27" y="24" width="1" height="1"/><rect x="28" y="24" width="1" height="1"/><rect x="12" y="25" width="1" height="1"/><rect x="14" y="25" width="1" height="1"/><rect x="15" y="25" width="1" height="1"/><rect x="16" y="25" width="1" height="1"/><rect x="21" y="25" width="1" height="1"/><rect x="24" y="25" width="1" height="1"/><rect x="28" y="25" width="1" height="1"/><rect x="30" y="25" width="1" height="1"/><rect x="31" y="25" width="1" height="1"/><rect x="32" y="25" width="1" height="1"/><rect x="4" y="26" width="1" height="1"/><rect x="5" y="26" width="1" height="1"/><rect x="6" y="26" width="1" height="1"/><rect x="7" y="26" width="1" height="1"/><rect x="8" y="26" width="1" height="1"/><rect x="9" y="26" width="1" height="1"/><rect x="10" y="26" width="1" height="1"/><rect x="12" y="26" width="1" height="1"/><rect x="13" y="26" width="1" height="1"/><rect x="14" y="26" width="1" height="1"/><rect x="15" y="26" width="1" height="1"/><rect x="16" y="26" width="1" height="1"/><rect x="18" y="26" width="1" height="1"/><rect x="21" y="26" width="1" height="1"/><rect x="22" y="26" width="1" height="1"/><rect x="23" y="26" width="1" height="1"/><rect x="24" y="26" width="1" height="1"/><rect x="26" y="26" width="1" height="1"/><rect x="28" y="26" width="1" height="1"/><rect x="29" y="26" width="1" height="1"/><rect x="31" y="26" width="1" height="1"/><rect x="32" y="26" width="1" height="1"/><rect x="4" y="27" width="1" height="1"/><rect x="10" y="27" width="1" height="1"/><rect x="12" y="27" width="1" height="1"/><rect x="16" y="27" width="1" height="1"/><rect x="17" y="27" width="1" height="1"/><rect x="18" y="27" width="1" height="1"/><rect x="20" y="27" width="1" height="1"/><rect x="21" y="27" width="1" height="1"/><rect x="24" y="27" width="1" height="1"/><rect x="28" y="27" width="1" height="1"/><rect x="29" y="27" width="1" height="1"/><rect x="31" y="27" width="1" height="1"/><rect x="4" y="28" width="1" height="1"/><rect x="6" y="28" width="1" height="1"/><rect x="7" y="28" width="1" height="1"/><rect x="8" y="28" width="1" height="1"/><rect x="10" y="28" width="1" height="1"/><rect x="12" y="28" width="1" height="1"/><rect x="14" y="28" width="1" height="1"/><rect x="15" y="28" width="1" height="1"/><rect x="16" y="28" width="1" height="1"/><rect x="17" y="28" width="1" height="1"/><rect x="19" y="28" width="1" height="1"/><rect x="20" y="28" width="1" height="1"/><rect x="21" y="28" width="1" height="1"/><rect x="22" y="28" width="1" height="1"/><rect x="24" y="28" width="1" height="1"/><rect x="25" y="28" width="1" height="1"/><rect x="26" y="28" width="1" height="1"/><rect x="27" y="28" width="1" height="1"/><rect x="28" y="28" width="1" height="1"/><rect x="31" y="28" width="1" height="1"/><rect x="4" y="29" width="1" height="1"/><rect x="6" y="29" width="1" height="1"/><rect x="7" y="29" width="1" height="1"/><rect x="8" y="29" width="1" height="1"/><rect x="10" y="29" width="1" height="1"/><rect x="14" y="29" width="1" height="1"/><rect x="15" y="29" width="1" height="1"/><rect x="17" y="29" width="1" height="1"/><rect x="20" y="29" width="1" height="1"/><rect x="23" y="29" width="1" height="1"/><rect x="27" y="29" width="1" height="1"/><rect x="28" y="29" width="1" height="1"/><rect x="30" y="29" width="1" height="1"/><rect x="31" y="29" width="1" height="1"/><rect x="32" y="29" width="1" height="1"/><rect x="4" y="30" width="1" height="1"/><rect x="6" y="30" width="1" height="1"/><rect x="7" y="30" width="1" height="1"/><rect x="8" y="30" width="1" height="1"/><rect x="10" y="30" width="1" height="1"/><rect x="12" y="30" width="1" height="1"/><rect x="13" y="30" width="1" height="1"/><rect x="21" y="30" width="1" height="1"/><rect x="23" y="30" width="1" height="1"/><rect x="24" y="30" width="1" height="1"/><rect x="25" y="30" width="1" height="1"/><rect x="27" y="30" width="1" height="1"/><rect x="28" y="30" width="1" height="1"/><rect x="29" y="30" width="1" height="1"/><rect x="32" y="30" width="1" height="1"/><rect x="4" y="31" width="1" height="1"/><rect x="10" y="31" width="1" height="1"/><rect x="12" y="31" width="1" height="1"/><rect x="13" y="31" width="1" height="1"/><rect x="14" y="31" width="1" height="1"/><rect x="16" y="31" width="1" height="1"/><rect x="17" y="31" width="1" height="1"/><rect x="19" y="31" width="1" height="1"/><rect x="21" y="31" width="1" height="1"/><rect x="24" y="31" width="1" height="1"/><rect x="25" y="31" width="1" height="1"/><rect x="26" y="31" width="1" height="1"/><rect x="27" y="31" width="1" height="1"/><rect x="28" y="31" width="1" height="1"/><rect x="31" y="31" width="1" height="1"/><rect x="4" y="32" width="1" height="1"/><rect x="5" y="32" width="1" height="1"/><rect x="6" y="32" width="1" height="1"/><rect x="7" y="32" width="1" height="1"/><rect x="8" y="32" width="1" height="1"/><rect x="9" y="32" width="1" height="1"/><rect x="10" y="32" width="1" height="1"/><rect x="12" y="32" width="1" height="1"/><rect x="15" y="32" width="1" height="1"/><rect x="16" y="32" width="1" height="1"/><rect x="17" y="32" width="1" height="1"/><rect x="18" y="32" width="1" height="1"/><rect x="19" y="32" width="1" height="1"/><rect x="20" y="32" width="1" height="1"/><rect x="21" y="32" width="1" height="1"/><rect x="23" y="32" width="1" height="1"/><rect x="24" y="32" width="1" height="1"/><rect x="25" y="32" width="1" height="1"/><rect x="26" y="32" width="1" height="1"/><rect x="27" y="32" width="1" height="1"/><rect x="28" y="32" width="1" height="1"/><rect x="29" y="32" width="1" height="1"/><rect x="31" y="32" width="1" height="1"/><rect x="32" y="32" width="1" height="1"/>
+</g>
+</svg></div>
+          <div class="mono" style="font-size:0.78rem; color:var(--pine); font-weight:600;">SCAN FOR LIVE COMPANY ONE-PAGER</div>
+          <div class="mono" style="font-size:0.73rem; color:var(--ink-soft);">https://vdrogobytskyy.github.io/bastiongrid/</div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-foot mono"><span>BastionGrid Embedded · Kyiv / Warsaw</span><span>Slide 10 / 10</span></div>
+  </section>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  let idx = 0;
+  function show(n) {
+    idx = (n + slides.length) % slides.length;
+    slides.forEach((s, i) => s.classList.toggle('active', i === idx));
+    document.getElementById('counter').textContent = `${idx + 1} / ${slides.length}`;
+  }
+  function nextSlide() { show(idx + 1); }
+  function prevSlide() { show(idx - 1); }
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); nextSlide(); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); prevSlide(); }
+  });
+</script>
+</body>
+</html>

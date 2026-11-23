@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stages 5–6 · embedded world 2027 Registration, Travel Desk &amp; Trip Log — BastionGrid</title>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #F4F3EE; --surface: #FFFFFF; --surface-2: #EAE8E0; --border: #CFCBC0;
+      --amber: #1B3A2B; --cyan: #D1491F; --green: #1B3A2B; --red: #B91C1C; --text: #14191F; --muted: #46515E;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'IBM Plex Sans', -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.58; padding: 24px; }
+    .mono { font-family: 'IBM Plex Mono', monospace; }
+    h1, h2, h3 { font-family: 'IBM Plex Sans', sans-serif; letter-spacing: -0.02em; }
+    .wrap { max-width: 1120px; margin: 0 auto; display: grid; gap: 20px; }
+
+    .topbar {
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;
+      padding: 16px 22px; background: var(--surface); border: 1.5px solid #14191F; border-top: 4px solid #1B3A2B; border-radius: 3px;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; }
+    .tabs { display: flex; gap: 8px; flex-wrap: wrap; }
+    .tab-btn {
+      background: var(--surface-2); border: 1px solid var(--border); color: var(--muted);
+      padding: 8px 15px; border-radius: 3px; cursor: pointer; font-weight: 600; font-size: 0.85rem;
+    }
+    .tab-btn.active { background: #1B3A2B; color: #FFFFFF; border-color: #1B3A2B; }
+
+    .panel { display: none; gap: 18px; }
+    .panel.active { display: grid; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-top: 3px solid #1B3A2B; border-radius: 3px; padding: 22px; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .badge {
+      display: inline-block; padding: 3px 10px; border-radius: 2px; font-size: 0.72rem; font-weight: 600;
+    }
+    .badge-amber { background: #FCECE6; color: #D1491F; border: 1px solid #D1491F; }
+    .badge-green { background: #E6EFEA; color: #1B3A2B; border: 1px solid #1B3A2B; }
+    .badge-cyan { background: #EAE8E0; color: #14191F; border: 1px solid #CFCBC0; }
+
+    .email {
+      background: #FAF9F5; border: 1px solid var(--border); border-left: 3px solid #1B3A2B; border-radius: 3px; padding: 18px; margin-top: 12px;
+    }
+    .email-meta {
+      display: grid; gap: 3px; font-size: 0.79rem; color: var(--muted);
+      padding-bottom: 10px; margin-bottom: 12px; border-bottom: 1px solid var(--border);
+    }
+    .email-meta strong { color: var(--text); }
+    .email-body { font-size: 0.89rem; color: #1F2937; display: grid; gap: 9px; }
+
+    .invoice {
+      background: #FAF9F5; border: 2px solid #1B3A2B; border-radius: 3px; padding: 20px; position: relative;
+    }
+    .stamp {
+      position: absolute; top: 18px; right: 20px;
+      border: 2px solid #1B3A2B; color: #1B3A2B; background: #E6EFEA; padding: 4px 12px; border-radius: 2px;
+      font-weight: 700; font-size: 0.8rem; transform: rotate(-6deg);
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 0.86rem; margin-top: 12px; }
+    th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--border); }
+    th { background: var(--surface-2); color: #14191F; font-family: 'IBM Plex Mono', monospace; font-size: 0.73rem; text-transform: uppercase; }
+    ul { list-style: none; display: grid; gap: 7px; margin-top: 10px; font-size: 0.89rem; color: var(--muted); }
+    li::before { content: "▪ "; color: #D1491F; font-weight: 700; }
+    a.link { color: #1B3A2B; font-weight: 600; text-decoration: underline; }
+
+    @media (max-width: 860px) { .grid-2 { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <div class="brand">
+      <svg width="28" height="28" viewBox="0 0 40 40" fill="none"><rect x="2" y="2" width="36" height="36" rx="3" fill="#1B3A2B" stroke="#14191F" stroke-width="2"/><path d="M11 11 H29 V29 H11 Z" fill="none" stroke="#F4F3EE" stroke-width="1.7"/><rect x="16.5" y="16.5" width="7" height="7" fill="#D1491F"/></svg>
+      <div>
+        <div>BASTIONGRID · Stages 5–6 Operations Portal</div>
+        <div class="mono" style="font-size:0.72rem; color:var(--muted);">Real 2027 Conference + Simulated Organizer, Payment &amp; Travel Desk Execution</div>
+      </div>
+    </div>
+    <div class="tabs">
+      <button class="tab-btn active" onclick="openTab('conf', this)">1. embedded world 2027 (Real)</button>
+      <button class="tab-btn" onclick="openTab('org', this)">2. Organizers &amp; PAID Invoice</button>
+      <button class="tab-btn" onclick="openTab('travel', this)">3. Travel Desk &amp; Trip Log</button>
+    </div>
+  </div>
+
+  <!-- TAB 1: REAL CONFERENCE -->
+  <section id="conf" class="panel active">
+    <div class="card">
+      <span class="badge badge-amber mono">STAGE 5 · VERIFIED REAL 2027 EVENT</span>
+      <h1 style="margin:10px 0 8px;">embedded world Exhibition &amp; Conference 2027</h1>
+      <p style="color:var(--muted);">The world's leading trade fair for embedded systems, hardware, RTOS, IoT connectivity, safety &amp; security — ideal buyer concentration for European defense-logistics and industrial infrastructure integrators.</p>
+      <div class="grid-2" style="margin-top:16px;">
+        <div style="background:#FAF9F5; border:1px solid var(--border); border-radius:10px; padding:16px;">
+          <div class="mono" style="color:var(--cyan); font-size:0.78rem; margin-bottom:8px;">VERIFIED EVENT DETAILS</div>
+          <ul>
+            <li><strong>Dates:</strong> March 16 – 18, 2027</li>
+            <li><strong>Venue:</strong> Exhibition Centre Nuremberg (Messezentrum Nürnberg), Germany</li>
+            <li><strong>Official Website:</strong> <a class="link mono" href="https://www.embedded-world.de/" target="_blank" rel="noopener">https://www.embedded-world.de/</a></li>
+            <li><strong>BastionGrid Format (Lecture 03):</strong> Combination — 12 m² Booth (Hall 3, Simulated Stand <code>3-418</code>) + Active Foot Hunting</li>
+            <li><strong>Goal / KPI (Lecture 09):</strong> 15+ qualified technical contacts → 4+ scheduled follow-ups + market intelligence report for QBR</li>
+          </ul>
+        </div>
+        <div style="background:#FAF9F5; border:1px solid var(--border); border-radius:10px; padding:16px;">
+          <div class="mono" style="color:var(--amber); font-size:0.78rem; margin-bottom:8px;">BOOTH DEMO RISK CHECKLIST (LECTURE 09)</div>
+          <ul>
+            <li><strong>Network:</strong> Dedicated <strong>wired RJ45 Ethernet drop</strong> ordered from venue (NEVER rely on congested hall Wi-Fi!) + offline local failover mode.</li>
+            <li><strong>Demo Hardware:</strong> 2× IP67 `SN-NODE` units + `SN-GW` + live J1939 simulator + operator laptop + spare PSU &amp; cables.</li>
+            <li><strong>Collateral:</strong> A1 Conference Poster, 150 unified double-sided business cards (3 delegation roles), verified working QR codes.</li>
+            <li><strong>Delegation (3 roles):</strong> Volodymyr Drohobytskyi (Co-Founder &amp; System Architect), Kateryna Lysenko (Engagement), Olena Kovalenko (Delivery).</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TAB 2: ORGANIZERS & INVOICE -->
+  <section id="org" class="panel">
+    <div class="grid-2">
+      <div class="card">
+        <span class="badge badge-cyan mono">SIMULATED ORGANIZER THREAD</span>
+        <h2 style="margin-top:8px;">Stand Booking &amp; Technical Services</h2>
+        <div class="email">
+          <div class="email-meta mono">
+            <div><strong>From:</strong> Kateryna Lysenko &lt;k.lysenko@bastiongrid.io&gt;</div>
+            <div><strong>To:</strong> Exhibitor Services · embedded world 2027 (Simulated)</div>
+            <div><strong>Date:</strong> Jan 12, 2027 · 10:14 EET</div>
+            <div><strong>Subject:</strong> Booth Confirmation 12 m² + Wired Ethernet Drop — BastionGrid Embedded</div>
+          </div>
+          <div class="email-body">
+            <p>Dear embedded world Exhibitor Services Team,</p>
+            <p>Following our Q1 QBR approval, we confirm our booking for a <strong>12 m² corner booth in Hall 3 (Industrial IoT &amp; Embedded Security)</strong> for <strong>embedded world 2027 (March 16–18, 2027)</strong>.</p>
+            <p>Because we are running a live hardware-in-the-loop telemetry demo, please include a <strong>dedicated wired Ethernet connection (100 Mbps)</strong> and a 3 kW power drop in addition to 3 exhibitor passes (Volodymyr Drohobytskyi, Kateryna Lysenko, Olena Kovalenko).</p>
+            <p>Please issue the final invoice so our finance team can settle it this week.</p>
+            <p>Best regards,<br/>Kateryna Lysenko · Engagement Manager, BastionGrid Embedded</p>
+          </div>
+        </div>
+        <div class="email">
+          <div class="email-meta mono">
+            <div><strong>From:</strong> Exhibitor Services (Simulated) &lt;exhibitors-sim@ew2027.example&gt;</div>
+            <div><strong>To:</strong> Kateryna Lysenko &lt;k.lysenko@bastiongrid.io&gt;; Olena Kovalenko &lt;o.kovalenko@bastiongrid.io&gt;</div>
+            <div><strong>Date:</strong> Jan 15, 2027 · 14:40 CET</div>
+            <div><strong>Subject:</strong> RE: Booth Confirmation — Stand 3-418 Allocated &amp; Payment Received</div>
+          </div>
+          <div class="email-body">
+            <p>Dear Ms. Lysenko,</p>
+            <p>We confirm receipt of your bank transfer for <strong>Invoice #EW27-BG-0418 (€8,450.00)</strong>. Your allocated stand is <strong>Hall 3, Stand 3-418</strong>.</p>
+            <p>Setup access opens <strong>Monday, March 15, 2027 at 08:00 CET</strong>. Your wired RJ45 drop and 3 kW line will be live by 11:00 CET on setup day.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <span class="badge badge-green mono">SIMULATED PAYMENT CONFIRMATION</span>
+        <h2 style="margin:8px 0 12px;">Invoice #EW27-BG-0418</h2>
+        <div class="invoice">
+          <div class="stamp mono">PAID · SIMULATION</div>
+          <div class="mono" style="font-size:0.78rem; color:var(--muted);">
+            <div><strong>Event:</strong> embedded world 2027 (Mar 16–18, 2027 · Nuremberg)</div>
+            <div><strong>Exhibitor:</strong> BastionGrid Embedded LLC</div>
+            <div><strong>Stand Allocation:</strong> Hall 3 · Stand 3-418 (12 m²)</div>
+            <div><strong>Payment Date:</strong> Jan 15, 2027 · Wire Ref: BG-SEPA-20270115</div>
+          </div>
+          <table>
+            <thead><tr><th>Line Item</th><th>Qty</th><th>Amount (€)</th></tr></thead>
+            <tbody>
+              <tr><td>Exhibition Space — Hall 3 (12 m² shell scheme)</td><td>1</td><td>€6,480.00</td></tr>
+              <tr><td>Dedicated Wired Ethernet Drop (100 Mbps RJ45)</td><td>1</td><td>€690.00</td></tr>
+              <tr><td>Electrical Supply (3 kW + distribution box)</td><td>1</td><td>€480.00</td></tr>
+              <tr><td>Exhibitor Passes + Lead-Scanner License</td><td>3</td><td>€540.00</td></tr>
+              <tr><td>Media &amp; Official Catalogue Listing</td><td>1</td><td>€260.00</td></tr>
+              <tr><td><strong>TOTAL PAID (Simulation)</strong></td><td></td><td><strong style="color:var(--green);">€8,450.00</strong></td></tr>
+            </tbody>
+          </table>
+          <p class="mono" style="font-size:0.72rem; color:var(--muted); margin-top:12px;">* Educational simulation artifact — demonstrates budget discipline (within €32k annual exhibition allocation) and wired demo readiness.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TAB 3: TRAVEL DESK & TRIP -->
+  <section id="travel" class="panel">
+    <div class="grid-2">
+      <div class="card">
+        <span class="badge badge-amber mono">STAGE 6 · TRAVEL DESK COORDINATION</span>
+        <h2 style="margin-top:8px;">Fixing Travel Friction Before Departure</h2>
+        <div class="email">
+          <div class="email-meta mono">
+            <div><strong>From:</strong> Corporate Travel Desk &lt;travel@bastiongrid.io&gt;</div>
+            <div><strong>To:</strong> Volodymyr Drohobytskyi; Olena Kovalenko; Kateryna Lysenko</div>
+            <div><strong>Date:</strong> Feb 18, 2027 · 11:20 EET</div>
+            <div><strong>Subject:</strong> Draft Itinerary — Nuremberg (Mar 15–18, 2027)</div>
+          </div>
+          <div class="email-body">
+            <p>Hi team, here is the initial travel option: night train Kyiv→Warsaw on Mar 14, early morning flight WAW→NUE arriving Mar 15 at 13:40, and a budget hotel 38 minutes outside Nuremberg. Return flight Mar 18 at 17:15.</p>
+          </div>
+        </div>
+        <div class="email" style="border-color:var(--amber);">
+          <div class="email-meta mono">
+            <div><strong>From:</strong> Volodymyr Drohobytskyi &lt;v.drohobytskyi@bastiongrid.io&gt;</div>
+            <div><strong>To:</strong> Corporate Travel Desk &lt;travel@bastiongrid.io&gt;; Olena Kovalenko</div>
+            <div><strong>Date:</strong> Feb 18, 2027 · 13:05 EET</div>
+            <div><strong>Subject:</strong> RE: Draft Itinerary — Adjustments Required (Setup &amp; Rest Buffer)</div>
+          </div>
+          <div class="email-body">
+            <p>Thanks for the quick draft, but we need <strong>three fixes</strong> so the team isn't exhausted on Day 1 (lesson from our delivery guidelines):</p>
+            <p>1. <strong>Arrival:</strong> Move flight to Sunday afternoon <strong>Mar 14</strong> so we sleep properly before Monday 08:00 booth setup and hardware/Ethernet testing.</p>
+            <p>2. <strong>Hotel:</strong> Rebook within 15 min by U-Bahn (U1 line to Messe) — we are carrying Pelican cases with rugged demo hardware.</p>
+            <p>3. <strong>Return:</strong> Move flight to <strong>Friday Mar 19 morning</strong> — leaving Mar 18 at 17:15 clashes with exhibition teardown (17:00–19:30) and customs packing of demo units.</p>
+            <p>4. Please confirm ATA Carnet / temporary EU demo-hardware manifest with Dmytro (Procurement) for our Warsaw hub handover.</p>
+          </div>
+        </div>
+        <div class="email" style="border-color:var(--green);">
+          <div class="email-meta mono">
+            <div><strong>From:</strong> Corporate Travel Desk &lt;travel@bastiongrid.io&gt;</div>
+            <div><strong>Date:</strong> Feb 19, 2027 · 16:10 EET</div>
+            <div><strong>Subject:</strong> CONFIRMED Itinerary — Nuremberg (Mar 14–19, 2027)</div>
+          </div>
+          <div class="email-body">
+            <p>All three changes confirmed! Tickets, U1-line hotel vouchers, Pelican case oversized luggage tags, and Warsaw hardware transit checklist are attached. Total travel cost: <strong>€3,180</strong> (within approved exhibition budget).</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <span class="badge badge-green mono">STAGE 6 · TRIP EXECUTION LOG</span>
+        <h2 style="margin-top:8px;">Nuremberg Field Execution (Mar 14–19, 2027)</h2>
+        <table>
+          <thead><tr><th>Date</th><th>Milestone &amp; Field Action</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">Mar 14</td><td>Kyiv → Warsaw hub (pickup demo Pelican cases &amp; printed A1 poster/cards) → Flight WAW–NUE → Check-in &amp; rest</td><td><span class="badge badge-green">Done</span></td></tr>
+            <tr><td class="mono">Mar 15</td><td>08:30 Stand 3-418 setup · Mounted A1 poster · Verified wired RJ45 + offline failover · Dry-run 30-sec pitch</td><td><span class="badge badge-green">Done</span></td></tr>
+            <tr><td class="mono">Mar 16</td><td><strong>Exhibition Day 1:</strong> 9 technical booth conversations + Kateryna hunting Hall 3/4. Logged contacts in CRM same evening.</td><td><span class="badge badge-green">Done</span></td></tr>
+            <tr><td class="mono">Mar 17</td><td><strong>Exhibition Day 2:</strong> Key encounter at 11:20 with <strong>Henrik Lindqvist (NordShield AB, Sweden)</strong> — qualified lead + agreed follow-up!</td><td><span class="badge badge-amber">Key Lead</span></td></tr>
+            <tr><td class="mono">Mar 18</td><td><strong>Exhibition Day 3:</strong> 5 more discovery chats, polite wave to Henrik (no pushy re-pitching per Lecture 09!), 17:30 safe hardware teardown.</td><td><span class="badge badge-green">Done</span></td></tr>
+            <tr><td class="mono">Mar 19</td><td>Return NUE → WAW → Kyiv · Same-day Follow-Up #1 sent by Volodymyr + Market Intelligence QBR brief drafted.</td><td><span class="badge badge-cyan">Follow-Up</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+  function openTab(id, btn) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+  }
+</script>
+</body>
+</html>
